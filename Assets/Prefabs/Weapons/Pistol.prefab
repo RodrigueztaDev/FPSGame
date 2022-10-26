@@ -146,9 +146,34 @@ MonoBehaviour:
   projectileSpawnRoot_: {fileID: 4901853887319523017}
   projectileSpeed_: 75
   totalAnimationTime_: 1.1
+  bulletCooldown_: 0.1
   totalBulletAmount_: 150
   shotSound_: {fileID: 8300000, guid: 01afde374f566df4d8e736082da2e8c5, type: 3}
-  animationCurve_:
+  showAnimationCurve_:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0.30232555
+      outSlope: -0.30232555
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.26875
+    - serializedVersion: 3
+      time: 1
+      value: 1080
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  shotAnimationCurve_:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -161,8 +186,17 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 1080
+      time: 0.05
+      value: -90
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 136

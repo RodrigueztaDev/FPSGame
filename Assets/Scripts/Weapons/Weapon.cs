@@ -9,6 +9,7 @@ public abstract class Weapon : MonoBehaviour
     public GameObject projectileSpawnRoot_;
     public float projectileSpeed_;
     public float totalAnimationTime_;
+    public float bulletCooldown_;
     [SerializeField]
     protected int totalBulletAmount_;
     public int TotalBulletAmmount { get { return totalBulletAmount_; } }
@@ -17,7 +18,10 @@ public abstract class Weapon : MonoBehaviour
     public AudioClip shotSound_;
     protected AudioSource audioSource_;
 
-    public AnimationCurve animationCurve_;
+
+    [Header("Animation")]
+    public AnimationCurve showAnimationCurve_;
+    public AnimationCurve shotAnimationCurve_;
 
     public delegate void OnShootDelegate();
     public event OnShootDelegate onShoot_;
@@ -37,13 +41,14 @@ public abstract class Weapon : MonoBehaviour
     }
 
     protected bool isShowingAnimation_;
-    protected float animationTime_;
+    protected float showAnimationTime_;
+    protected bool isShootingAnimation_;
+    protected float currentBulletCooldown_;
 
     private void Awake()
     {
         Debug.Assert(projectilePrefab_ != null);
         Debug.Assert(projectileSpawnRoot_ != null);
-        Debug.Assert(animationCurve_ != null);
     }
 
     private void Update()
@@ -64,4 +69,5 @@ public abstract class Weapon : MonoBehaviour
     public abstract void Shoot();
     public abstract void ShowAnimation();
     protected abstract void ReloadUpdate();
+    protected abstract void ShotUpdate();
 }
