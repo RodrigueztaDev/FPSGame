@@ -7,7 +7,7 @@ public class Pistol : Weapon
     void Awake()
     {
         type_ = WeaponType.kPistol;
-        currentMagazineSize_ = magazineMaxSize_;
+        audioSource_ = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -17,51 +17,46 @@ public class Pistol : Weapon
 
     public override void Shoot()
     {
-        if(currentMagazineSize_ > 0)
+        if(totalBulletAmount_ > 0)
         {
-            GameObject bullet = Instantiate(projectilePrefab_,
-                projectileSpawnRoot_.transform.position, 
-                Quaternion.LookRotation(projectileSpawnRoot_.transform.forward, projectileSpawnRoot_.transform.up));
-            Debug.Assert(bullet != null);
-            bullet.GetComponent<Bullet>().Shoot(projectileSpawnRoot_.transform.forward, projectileSpeed_);
-            currentMagazineSize_--;
-            OnShoot();
+            if(!isShowingAnimation_)
+            {
+                GameObject bullet = Instantiate(projectilePrefab_,
+                    projectileSpawnRoot_.transform.position, 
+                    Quaternion.LookRotation(projectileSpawnRoot_.transform.forward, projectileSpawnRoot_.transform.up));
+                Debug.Assert(bullet != null);
+                bullet.GetComponent<Bullet>().Shoot(projectileSpawnRoot_.transform.forward, projectileSpeed_);
+                totalBulletAmount_--;
+                audioSource_.PlayOneShot(shotSound_);
+                OnShoot();
+            }
         }
         else
         {
-            Reload();
+            ShowAnimation();
         }
     }
 
-    public override void Reload()
+    public override void ShowAnimation()
     {
-        if(!isReloading_ && totalBulletAmount_ > 0)
+        if(!isShowingAnimation_)
         {
-            reloadingTime_ = 0.0f;
-            isReloading_ = true;
+            animationTime_ = 0.0f;
+            isShowingAnimation_ = true;
         }
     }
 
     protected override void ReloadUpdate()
     {
-        if(isReloading_)
+        if(isShowingAnimation_)
         {
-            reloadingTime_ += Time.deltaTime;
-            transform.localPosition = new Vector3(transform.localPosition.x, reloadAnimationCurve_.Evaluate(reloadingTime_), transform.localPosition.z);
-            if (reloadingTime_ >= reloadTime_)
+            animationTime_ += Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(new Vector3(animationCurve_.Evaluate(animationTime_), 0f, 0f));
+            if (animationTime_ >= totalAnimationTime_)
             {
-                isReloading_ = false;
-                totalBulletAmount_ -= magazineMaxSize_ - currentMagazineSize_;
-                if(totalBulletAmount_ < 0)
-                {
-                    currentMagazineSize_ = magazineMaxSize_ + totalBulletAmount_;
-                    totalBulletAmount_ = 0;
-                }
-                else
-                {
-                    currentMagazineSize_ = magazineMaxSize_;
-                }
-                OnReload();
+                transform.localRotation = Quaternion.identity;
+                isShowingAnimation_ = false;
+                OnShowAnimation();
             }
         }
     }

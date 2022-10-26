@@ -129,10 +129,10 @@ public class FirstPersonController : MonoBehaviour
 				_input.shoot = false;
 			}
 
-			if (_input.reload)
+			if (_input.showAnimation)
 			{
-				currentWeapon_.Reload();
-				_input.reload = false;
+				currentWeapon_.ShowAnimation();
+				_input.showAnimation = false;
 			}
 		}
 	}

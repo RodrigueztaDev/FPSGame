@@ -11,7 +11,7 @@ public class StarterAssetsInputs : MonoBehaviour
 	public bool jump;
 	public bool sprint;
 	public bool shoot;
-	public bool reload;
+	public bool showAnimation;
 
 	[Header("Movement Settings")]
 	public bool analogMovement;
@@ -71,9 +71,9 @@ public class StarterAssetsInputs : MonoBehaviour
 		shoot = newShootState;
 	}
 
-	public void ReloadInput(bool newReloadState)
+	public void ShowAnimationInput(bool newAnimationState)
 	{
-		reload = newReloadState;
+		showAnimation = newAnimationState;
 	}
 
 	private void OnApplicationFocus(bool hasFocus)
@@ -91,8 +91,8 @@ public class StarterAssetsInputs : MonoBehaviour
 		ShootInput(value.isPressed);
 	}
 
-	public void OnReload(InputValue value)
+	public void OnShowAnimation(InputValue value)
 	{
-		ReloadInput(value.isPressed);
+		ShowAnimationInput(value.isPressed);
 	}
 }

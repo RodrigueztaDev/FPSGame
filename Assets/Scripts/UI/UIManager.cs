@@ -14,13 +14,13 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Weapon currentWeapon = player_.currentWeapon_;
-        currentWeapon.onReload_ += () => UpdateAmmo(currentWeapon.CurrentMagazineSize, currentWeapon.totalBulletAmount_);
-        currentWeapon.onShoot_ += () => UpdateAmmo(currentWeapon.CurrentMagazineSize, currentWeapon.totalBulletAmount_);
-        UpdateAmmo(currentWeapon.CurrentMagazineSize, currentWeapon.totalBulletAmount_);
+        currentWeapon.onShowAnimation_ += () => UpdateAmmo(currentWeapon.TotalBulletAmmount);
+        currentWeapon.onShoot_ += () => UpdateAmmo(currentWeapon.TotalBulletAmmount);
+        UpdateAmmo(currentWeapon.TotalBulletAmmount);
     }
 
-    public void UpdateAmmo(float currentAmmo, float totalAmmo)
+    public void UpdateAmmo(float currentAmmo)
     {
-        ammoText_.text = currentAmmo.ToString() + " / " + totalAmmo.ToString();
+        ammoText_.text = currentAmmo.ToString();
     }
 }

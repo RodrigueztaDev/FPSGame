@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Reload",
+                    "name": "ShowAnimation",
                     "type": "Button",
                     "id": "ceca506b-af2c-4e9f-a374-49e13e2034e5",
                     "expectedControlType": "Button",
@@ -255,7 +255,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Reload",
+                    "action": "ShowAnimation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
