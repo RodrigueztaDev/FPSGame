@@ -65,4 +65,9 @@ public class WeaponInventory : MonoBehaviour
         UIManager.Instance.UpdateAmmo(weapons_[currentWeaponIndex_].TotalBulletAmmount);
         if(onWeaponSwap_ != null) onWeaponSwap_();
     }
+
+    public bool IsSemiAutomaticWeapon()
+    {
+        return CurrentWeapon.Type != Weapon.WeaponType.kRifle;
+    }
 }

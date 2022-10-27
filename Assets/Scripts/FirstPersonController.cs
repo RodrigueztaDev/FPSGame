@@ -18,6 +18,10 @@ public class FirstPersonController : MonoBehaviour
 	public float RotationSpeed = 1.0f;
 	[Tooltip("Acceleration and deceleration")]
 	public float SpeedChangeRate = 10.0f;
+	[Tooltip("Rotation the camera will experience when moving side to side")]
+	public float movementRotationMaxAngle_ = 10.0f;
+	[Tooltip("Rotation the camera will experience when moving side to side")]
+	public float movementRotationSmoothness_ = 1.0f;
 
 	[Space(10)]
 	[Tooltip("The height the player can jump")]
@@ -54,6 +58,9 @@ public class FirstPersonController : MonoBehaviour
 
 	// cinemachine
 	private float _cinemachineTargetPitch;
+	private float cinemachineTargetYaw_;
+	private float cinemachineCurrentYaw_;
+	private float movementRotationLerpFactor_;
 
 	// player
 	private float _speed;
@@ -129,7 +136,7 @@ public class FirstPersonController : MonoBehaviour
 			if(_input.shoot)
 			{
 				weaponInventory_.CurrentWeapon.Shoot();
-				if(weaponInventory_.CurrentWeapon.Type == Weapon.WeaponType.kPistol) _input.shoot = false;
+				if(weaponInventory_.IsSemiAutomaticWeapon()) _input.shoot = false;
 			}
 
 			if (_input.showAnimation)
@@ -189,12 +196,13 @@ public class FirstPersonController : MonoBehaviour
 			// clamp our pitch rotation
 			_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-			// Update Cinemachine camera target pitch
-			CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
-
 			// rotate the player left and right
 			transform.Rotate(Vector3.up * _rotationVelocity);
 		}
+
+		bool isReturningToNeutral = Mathf.Abs(cinemachineCurrentYaw_) > Mathf.Abs(cinemachineTargetYaw_);
+		cinemachineCurrentYaw_ = Mathf.Lerp(cinemachineCurrentYaw_, cinemachineTargetYaw_, isReturningToNeutral ? 1.0f - movementRotationLerpFactor_ : movementRotationLerpFactor_);
+		CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, cinemachineCurrentYaw_);
 	}
 
 	private void Move()
@@ -239,6 +247,26 @@ public class FirstPersonController : MonoBehaviour
 			// move
 			inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
 		}
+
+		if(_input.move.x != 0.0f)
+        {
+			movementRotationLerpFactor_ += movementRotationSmoothness_ * Time.deltaTime;
+			if (movementRotationLerpFactor_ > 1.0f)
+			{
+				movementRotationLerpFactor_ = 1.0f;
+			}
+		}
+		else
+		{
+			movementRotationLerpFactor_ -= movementRotationSmoothness_ * Time.deltaTime;
+			if (movementRotationLerpFactor_ < 0.0f)
+			{
+				movementRotationLerpFactor_ = 0.0f;
+			}
+		}
+
+		Vector3 relative = transform.InverseTransformDirection(_controller.velocity);
+		cinemachineTargetYaw_ = -relative.x * movementRotationMaxAngle_;
 
 		// move the player
 		_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);

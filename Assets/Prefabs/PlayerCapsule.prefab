@@ -228,6 +228,8 @@ MonoBehaviour:
   SprintSpeed: 15
   RotationSpeed: 1
   SpeedChangeRate: 10
+  movementRotationMaxAngle_: 0.8
+  movementRotationSmoothness_: 0.05
   JumpHeight: 1.5
   Gravity: -30
   JumpTimeout: 0.1
@@ -278,6 +280,9 @@ MonoBehaviour:
   shoot: 0
   shootHold: 0
   showAnimation: 0
+  scrollUp: 0
+  scrollDown: 0
+  selectedWeapon: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
