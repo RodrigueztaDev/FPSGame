@@ -250,11 +250,22 @@
                 },
                 {
                     "name": "",
+                    "id": "5abbf1ee-f393-43fa-8b16-8c41821ed07f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "1d8aed2b-83cd-43b0-bf39-866f735e7b9d",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "ShowAnimation",
                     "isComposite": false,
                     "isPartOfComposite": false

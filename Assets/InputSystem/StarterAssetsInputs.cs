@@ -11,6 +11,7 @@ public class StarterAssetsInputs : MonoBehaviour
 	public bool jump;
 	public bool sprint;
 	public bool shoot;
+	public bool shootHold;
 	public bool showAnimation;
 
 	[Header("Movement Settings")]

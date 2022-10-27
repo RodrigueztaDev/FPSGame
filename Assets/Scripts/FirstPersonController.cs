@@ -3,10 +3,10 @@
 using UnityEngine.InputSystem;
 #endif
 
-	[RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 	[RequireComponent(typeof(PlayerInput))]
 #endif
+[RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviour
 {
 	[Header("Player")]
@@ -126,7 +126,7 @@ public class FirstPersonController : MonoBehaviour
 			if(_input.shoot)
 			{
 				currentWeapon_.Shoot();
-				_input.shoot = false;
+				if(currentWeapon_.Type == Weapon.WeaponType.kPistol) _input.shoot = false;
 			}
 
 			if (_input.showAnimation)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     [Header("Weapon")]
     public GameObject projectilePrefab_;
@@ -16,7 +16,6 @@ public abstract class Weapon : MonoBehaviour
 
     [Header("Sound")]
     public AudioClip shotSound_;
-    protected AudioSource audioSource_;
 
 
     [Header("Animation")]
@@ -31,6 +30,11 @@ public abstract class Weapon : MonoBehaviour
     public enum WeaponType
     {
         kPistol,
+        kRifle,
+        kShotgun,
+        kSuperShotgun,
+        kCrossbow,
+        kMissileLauncher,
     }
 
     protected WeaponType type_;
@@ -66,8 +70,70 @@ public abstract class Weapon : MonoBehaviour
         if(onShowAnimation_ != null) onShowAnimation_();
     }
 
-    public abstract void Shoot();
-    public abstract void ShowAnimation();
-    protected abstract void ReloadUpdate();
-    protected abstract void ShotUpdate();
+    public virtual void Shoot()
+    {
+        if (totalBulletAmount_ > 0 && currentBulletCooldown_ <= 0.0f)
+        {
+            if (!isShowingAnimation_)
+            {
+                GameObject bullet = Instantiate(projectilePrefab_,
+                    projectileSpawnRoot_.transform.position,
+                    Quaternion.LookRotation(projectileSpawnRoot_.transform.forward, projectileSpawnRoot_.transform.up));
+                Debug.Assert(bullet != null);
+                bullet.GetComponent<Bullet>().Shoot(projectileSpawnRoot_.transform.forward, projectileSpeed_);
+                totalBulletAmount_--;
+                AudioManager.PlaySoundAtLocation(shotSound_, transform.position, 0.2f);
+                OnShoot();
+                isShootingAnimation_ = true;
+                currentBulletCooldown_ = bulletCooldown_;
+            }
+        }
+        else
+        {
+            ShowAnimation();
+        }
+    }
+
+    public void AddAmmo(int ammoToAdd)
+    {
+        totalBulletAmount_ += ammoToAdd;
+    }
+
+    public virtual void ShowAnimation()
+    {
+        if (!isShowingAnimation_ && !isShootingAnimation_)
+        {
+            showAnimationTime_ = 0.0f;
+            isShowingAnimation_ = true;
+        }
+    }
+
+    protected virtual void AnimationUpdate()
+    {
+        if (isShowingAnimation_)
+        {
+            showAnimationTime_ += Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(new Vector3(showAnimationCurve_.Evaluate(showAnimationTime_), 0f, 0f));
+            if (showAnimationTime_ >= totalAnimationTime_)
+            {
+                transform.localRotation = Quaternion.identity;
+                isShowingAnimation_ = false;
+                OnShowAnimation();  
+            }
+        }
+    }
+
+    protected virtual void ShotUpdate()
+    {
+        if (isShootingAnimation_)
+        {
+            currentBulletCooldown_ -= Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(new Vector3(shotAnimationCurve_.Evaluate(currentBulletCooldown_), 0f, 0f));
+            if (currentBulletCooldown_ <= 0.0f)
+            {
+                transform.localRotation = Quaternion.identity;
+                isShootingAnimation_ = false;
+            }
+        }
+    }
 }
