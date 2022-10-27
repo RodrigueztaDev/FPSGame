@@ -50,7 +50,7 @@ public class FirstPersonController : MonoBehaviour
 	public float BottomClamp = -90.0f;
 
 	[Header("Weapons")]
-	public Weapon currentWeapon_;
+	public WeaponInventory weaponInventory_;
 
 	// cinemachine
 	private float _cinemachineTargetPitch;
@@ -94,6 +94,8 @@ public class FirstPersonController : MonoBehaviour
 		{
 			_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		}
+
+		weaponInventory_ = GetComponent<WeaponInventory>();
 	}
 
 	private void Start()
@@ -113,6 +115,7 @@ public class FirstPersonController : MonoBehaviour
 
 	private void Update()
 	{
+		ManageWeaponInventory();
 		JumpAndGravity();
 		GroundedCheck();
 		Move();
@@ -121,21 +124,45 @@ public class FirstPersonController : MonoBehaviour
 
 	private void Shoot()
        {
-		if(currentWeapon_ != null)
+		if(weaponInventory_.CurrentWeapon != null)
            {
 			if(_input.shoot)
 			{
-				currentWeapon_.Shoot();
-				if(currentWeapon_.Type == Weapon.WeaponType.kPistol) _input.shoot = false;
+				weaponInventory_.CurrentWeapon.Shoot();
+				if(weaponInventory_.CurrentWeapon.Type == Weapon.WeaponType.kPistol) _input.shoot = false;
 			}
 
 			if (_input.showAnimation)
 			{
-				currentWeapon_.ShowAnimation();
+				weaponInventory_.CurrentWeapon.ShowAnimation();
 				_input.showAnimation = false;
 			}
 		}
 	}
+	private void ManageWeaponInventory()
+	{
+		if (weaponInventory_ != null)
+		{
+			if(_input.scrollUp)
+            {
+				weaponInventory_.SwapToNextWeapon();
+				_input.scrollUp = false;
+            }
+
+			if (_input.scrollDown)
+			{
+				weaponInventory_.SwapToPreviousWeapon();
+				_input.scrollDown = false;
+			}
+			if (_input.selectedWeapon != -1)
+			{
+				weaponInventory_.SwapToWeapon(_input.selectedWeapon);
+				_input.selectedWeapon = -1;
+			}
+
+		}
+	}
+
 
 	private void LateUpdate()
 	{

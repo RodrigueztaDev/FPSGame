@@ -13,6 +13,9 @@ public class StarterAssetsInputs : MonoBehaviour
 	public bool shoot;
 	public bool shootHold;
 	public bool showAnimation;
+	public bool scrollUp;
+	public bool scrollDown;
+	public int selectedWeapon;
 
 	[Header("Movement Settings")]
 	public bool analogMovement;
@@ -77,6 +80,17 @@ public class StarterAssetsInputs : MonoBehaviour
 		showAnimation = newAnimationState;
 	}
 
+	public void MouseScrollInput(bool newScrollUpState, bool newScrollDownState)
+	{
+		scrollUp = newScrollUpState;
+		scrollDown = newScrollDownState;
+	}
+
+	public void SelectedWeaponInput(int newSelectedWeapon)
+	{
+		selectedWeapon = newSelectedWeapon;
+	}
+
 	private void OnApplicationFocus(bool hasFocus)
 	{
 		SetCursorState(cursorLocked);
@@ -95,5 +109,16 @@ public class StarterAssetsInputs : MonoBehaviour
 	public void OnShowAnimation(InputValue value)
 	{
 		ShowAnimationInput(value.isPressed);
+	}
+
+	public void OnMouseScroll(InputValue value)
+	{
+		float z = value.Get<float>();
+		MouseScrollInput(z > 0, z < 0);
+	}
+
+	public void OnSwapWeapon(InputValue value)
+	{
+		SelectedWeaponInput((int)value.Get<float>());
 	}
 }

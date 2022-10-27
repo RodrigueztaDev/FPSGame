@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MouseScroll",
+                    "type": "Value",
+                    "id": "5f49640a-ca11-4122-829e-ed676192c4da",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SwapWeapon",
+                    "type": "Button",
+                    "id": "689730de-ef46-42f0-ab27-4e66c0d42bca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -267,6 +285,39 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "ShowAnimation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf70783c-aec1-4484-ba3c-f2e8984158e0",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "MouseScroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36737b68-56ce-4761-8a3e-8e5edb3356ee",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "Scale(factor=0)",
+                    "groups": "KeyboardMouse",
+                    "action": "SwapWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7713c710-199b-4f8c-9521-73304471deca",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "KeyboardMouse",
+                    "action": "SwapWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

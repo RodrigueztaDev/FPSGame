@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        Weapon currentWeapon = player_.currentWeapon_;
+        Weapon currentWeapon = player_.weaponInventory_.CurrentWeapon;
         currentWeapon.onShowAnimation_ += () => UpdateAmmo(currentWeapon.TotalBulletAmmount);
         currentWeapon.onShoot_ += () => UpdateAmmo(currentWeapon.TotalBulletAmmount);
         UpdateAmmo(currentWeapon.TotalBulletAmmount);

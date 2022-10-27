@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 3931974424891565313}
   - component: {fileID: 704427567393379729}
   - component: {fileID: 6032602054864769472}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 928347706167150099}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ProjectileRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
