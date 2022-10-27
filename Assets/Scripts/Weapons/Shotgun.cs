@@ -9,6 +9,16 @@ public class Shotgun : Weapon
     public int pelletNumber_;
     public float maxSpread_;
 
+    [Header("Shotgun Animation")]
+    public AnimationCurve reloadAnimationCurve_;
+    public float reloadAnimationTime_;
+    public float shotAnimationTime_;
+
+    private float currentshotAnimationTime_;
+    private float currentReloadAnimationTime_;
+    private bool isReloadingAnimation_;
+
+
     void Awake()
     {
         type_ = WeaponType.kShotgun;
@@ -18,13 +28,14 @@ public class Shotgun : Weapon
     {
         ShotUpdate();
         AnimationUpdate();
+        ReloadUpdate();
     }
 
     public override void Shoot()
     {
         if (totalBulletAmount_ > 0 && currentBulletCooldown_ <= 0.0f)
         {
-            if (!isShowingAnimation_)
+            if (!isShowingAnimation_ && !isReloadingAnimation_)
             {
                 Camera mainCamera = Camera.main;
                 RaycastHit hitInfo;
@@ -37,9 +48,11 @@ public class Shotgun : Weapon
 
                 totalBulletAmount_--;
                 AudioManager.PlaySoundAtLocation(shotSound_, transform.position, 0.2f);
+                fireParticle_.Play();
                 OnShoot();
                 isShootingAnimation_ = true;
                 currentBulletCooldown_ = bulletCooldown_;
+                currentshotAnimationTime_ = shotAnimationTime_;
             }
         }
         else
@@ -53,11 +66,29 @@ public class Shotgun : Weapon
         if (isShootingAnimation_)
         {
             currentBulletCooldown_ -= Time.deltaTime;
-            transform.localRotation = Quaternion.Euler(new Vector3(shotAnimationCurve_.Evaluate(currentBulletCooldown_), 0f, 0f));
-            if (currentBulletCooldown_ <= 0.0f)
+            currentshotAnimationTime_ -= Time.deltaTime;
+            transform.localPosition = new Vector3(0.0f, 0.0f, shotAnimationCurve_.Evaluate(currentshotAnimationTime_));
+            if (currentshotAnimationTime_ <= 0.0f)
             {
                 transform.localRotation = Quaternion.identity;
                 isShootingAnimation_ = false;
+                isReloadingAnimation_ = true;
+                currentReloadAnimationTime_ = reloadAnimationTime_;
+            }
+        }
+    }
+
+    protected void ReloadUpdate()
+    {
+        if (isReloadingAnimation_)
+        {
+            currentBulletCooldown_ -= Time.deltaTime;
+            currentReloadAnimationTime_ -= Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(new Vector3(reloadAnimationCurve_.Evaluate(currentReloadAnimationTime_), 0f, 0f));
+            if (currentReloadAnimationTime_ <= 0.0f)
+            {
+                transform.localRotation = Quaternion.identity;
+                isReloadingAnimation_ = false;
             }
         }
     }

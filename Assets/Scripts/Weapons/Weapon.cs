@@ -11,10 +11,14 @@ public class Weapon : MonoBehaviour
     [Header("Animation")]
     public AnimationCurve showAnimationCurve_;
     public AnimationCurve shotAnimationCurve_;
+    public float totalAnimationTime_;
+
+    [Header("Particle Effects")]
+    public ParticleSystem fireParticle_;
+
 
     [Header("Weapon Attributes")]
     public GameObject projectileSpawnRoot_;
-    public float totalAnimationTime_;
     public float bulletCooldown_;
     [SerializeField]
     protected int totalBulletAmount_;
@@ -79,6 +83,7 @@ public class Weapon : MonoBehaviour
                 Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 100.0f, Color.red, 5.0f);
                 totalBulletAmount_--;
                 AudioManager.PlaySoundAtLocation(shotSound_, transform.position, 0.2f);
+                fireParticle_.Play();
                 OnShoot();
                 isShootingAnimation_ = true;
                 currentBulletCooldown_ = bulletCooldown_;
