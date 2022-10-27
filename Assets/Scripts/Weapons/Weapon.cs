@@ -13,9 +13,7 @@ public class Weapon : MonoBehaviour
     public AnimationCurve shotAnimationCurve_;
 
     [Header("Weapon Attributes")]
-    public GameObject projectilePrefab_;
     public GameObject projectileSpawnRoot_;
-    public float projectileSpeed_;
     public float totalAnimationTime_;
     public float bulletCooldown_;
     [SerializeField]
@@ -51,7 +49,6 @@ public class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Assert(projectilePrefab_ != null);
         Debug.Assert(projectileSpawnRoot_ != null);
     }
 
@@ -76,11 +73,10 @@ public class Weapon : MonoBehaviour
         {
             if (!isShowingAnimation_)
             {
-                GameObject bullet = Instantiate(projectilePrefab_,
-                    projectileSpawnRoot_.transform.position,
-                    Quaternion.LookRotation(projectileSpawnRoot_.transform.forward, projectileSpawnRoot_.transform.up));
-                Debug.Assert(bullet != null);
-                bullet.GetComponent<Bullet>().Shoot(projectileSpawnRoot_.transform.forward, projectileSpeed_);
+                Camera mainCamera = Camera.main;
+                RaycastHit hitInfo;
+                Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitInfo);
+                Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 100.0f, Color.red, 5.0f);
                 totalBulletAmount_--;
                 AudioManager.PlaySoundAtLocation(shotSound_, transform.position, 0.2f);
                 OnShoot();

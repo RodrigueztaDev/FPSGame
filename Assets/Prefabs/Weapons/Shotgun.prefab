@@ -104,15 +104,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  projectilePrefab_: {fileID: 3703467108198948311, guid: 51fb7b1cedaf0d64a87c64d28c8cca7c,
-    type: 3}
   projectileSpawnRoot_: {fileID: 6485923745758678822}
-  projectileSpeed_: 80
   totalAnimationTime_: 1
   bulletCooldown_: 0.3
   totalBulletAmount_: 60
   pelletNumber_: 10
-  maxSpread_: 0.05
+  maxSpread_: 0.000005
 --- !u!1 &2647552404022046321
 GameObject:
   m_ObjectHideFlags: 0

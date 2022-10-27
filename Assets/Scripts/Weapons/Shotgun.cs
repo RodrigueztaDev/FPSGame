@@ -26,14 +26,13 @@ public class Shotgun : Weapon
         {
             if (!isShowingAnimation_)
             {
+                Camera mainCamera = Camera.main;
+                RaycastHit hitInfo;
                 for(int i = 0; i < pelletNumber_; i++)
                 {
-                    GameObject bullet = Instantiate(projectilePrefab_,
-                        projectileSpawnRoot_.transform.position,
-                        Quaternion.LookRotation(projectileSpawnRoot_.transform.forward, projectileSpawnRoot_.transform.up));
-                    Debug.Assert(bullet != null);
+                    Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitInfo);
                     Vector3 randomVector = new Vector3(Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_));
-                    bullet.GetComponent<Bullet>().Shoot(projectileSpawnRoot_.transform.forward + randomVector, projectileSpeed_);
+                    Debug.DrawRay(mainCamera.transform.position, (mainCamera.transform.forward + randomVector) * 100.0f, Color.red, 5.0f);
                 }
 
                 totalBulletAmount_--;
