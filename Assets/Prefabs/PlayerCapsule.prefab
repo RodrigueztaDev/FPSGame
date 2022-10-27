@@ -228,8 +228,8 @@ MonoBehaviour:
   SprintSpeed: 15
   RotationSpeed: 1
   SpeedChangeRate: 10
-  movementRotationMaxAngle_: 0.8
-  movementRotationSmoothness_: 0.05
+  movementRotationMaxAngle_: 5
+  movementRotationSmoothness_: 10
   JumpHeight: 1.5
   Gravity: -30
   JumpTimeout: 0.1

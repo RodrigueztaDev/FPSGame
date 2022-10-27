@@ -200,8 +200,7 @@ public class FirstPersonController : MonoBehaviour
 			transform.Rotate(Vector3.up * _rotationVelocity);
 		}
 
-		bool isReturningToNeutral = Mathf.Abs(cinemachineCurrentYaw_) > Mathf.Abs(cinemachineTargetYaw_);
-		cinemachineCurrentYaw_ = Mathf.Lerp(cinemachineCurrentYaw_, cinemachineTargetYaw_, isReturningToNeutral ? 1.0f - movementRotationLerpFactor_ : movementRotationLerpFactor_);
+		cinemachineCurrentYaw_ = Mathf.Lerp(cinemachineCurrentYaw_, cinemachineTargetYaw_, movementRotationSmoothness_ * Time.deltaTime);
 		CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, cinemachineCurrentYaw_);
 	}
 
@@ -250,25 +249,20 @@ public class FirstPersonController : MonoBehaviour
 
 		if(_input.move.x != 0.0f)
         {
-			movementRotationLerpFactor_ += movementRotationSmoothness_ * Time.deltaTime;
-			if (movementRotationLerpFactor_ > 1.0f)
+			if (_input.move.x > 0.0f)
 			{
-				movementRotationLerpFactor_ = 1.0f;
+				cinemachineTargetYaw_ = -movementRotationMaxAngle_;
+			}
+			else
+			{
+				cinemachineTargetYaw_ = movementRotationMaxAngle_;
 			}
 		}
 		else
 		{
-			movementRotationLerpFactor_ -= movementRotationSmoothness_ * Time.deltaTime;
-			if (movementRotationLerpFactor_ < 0.0f)
-			{
-				movementRotationLerpFactor_ = 0.0f;
-			}
+			cinemachineTargetYaw_ = 0.0f;
 		}
 
-		Vector3 relative = transform.InverseTransformDirection(_controller.velocity);
-		cinemachineTargetYaw_ = -relative.x * movementRotationMaxAngle_;
-
-		// move the player
 		_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 	}
 
