@@ -41,6 +41,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.layer != 10) Kill();
+        if(CheckValidLayer(collision.gameObject.layer)) Kill();
+    }
+
+    private bool CheckValidLayer(int layer) 
+    {
+        return layer != 10 && layer != 11;
     }
 }

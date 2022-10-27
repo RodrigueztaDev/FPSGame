@@ -159,7 +159,6 @@ public class FirstPersonController : MonoBehaviour
 				weaponInventory_.SwapToWeapon(_input.selectedWeapon);
 				_input.selectedWeapon = -1;
 			}
-
 		}
 	}
 

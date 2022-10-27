@@ -656,6 +656,7 @@ MonoBehaviour:
   weaponPrefabs_:
   - {fileID: 4658808056055342991, guid: 23e8c92a1cb66384488af3016e58bf54, type: 3}
   - {fileID: 2038126600333338617, guid: 2f214d6d296541d43af47e3d4faf3533, type: 3}
+  - {fileID: 2372615892564564018, guid: cc991ed916e812a49ae0724857e8cc70, type: 3}
 --- !u!1001 &2084445384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1126,6 +1127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5281690253469259155, guid: 680a9024ac7b6974fa9f8fed9c738088,
+        type: 3}
+      propertyPath: m_Text
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 6724760413142699890, guid: 680a9024ac7b6974fa9f8fed9c738088,
         type: 3}

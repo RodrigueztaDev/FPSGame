@@ -6,13 +6,20 @@ public class WeaponInventory : MonoBehaviour
 {
     public List<GameObject> weaponPrefabs_;
     private Weapon[] weapons_; // Using an array instead of a dictionary to have elements in order
+    public Weapon[] Weapons
+    {
+        get { return weapons_; }
+    }
     public Weapon CurrentWeapon
     {
         get { return weapons_[currentWeaponIndex_]; }
     }
     private int currentWeaponIndex_;
 
-    void Start()
+    public delegate void OnSwapWeaponDelegate();
+    public event OnSwapWeaponDelegate onWeaponSwap_;
+
+    void Awake()
     {
         weapons_ = new Weapon[weaponPrefabs_.Count];
         Transform weaponRootTransform = GameObject.Find("PlayerWeaponRoot").transform;
@@ -33,6 +40,8 @@ public class WeaponInventory : MonoBehaviour
         weapons_[currentWeaponIndex_].gameObject.SetActive(false);
         currentWeaponIndex_++;
         weapons_[currentWeaponIndex_].gameObject.SetActive(true);
+        UIManager.Instance.UpdateAmmo(weapons_[currentWeaponIndex_].TotalBulletAmmount);
+        if(onWeaponSwap_ != null) onWeaponSwap_();
     }
 
     public void SwapToWeapon(int index)
@@ -42,6 +51,8 @@ public class WeaponInventory : MonoBehaviour
         weapons_[currentWeaponIndex_].gameObject.SetActive(false);
         currentWeaponIndex_ = index;
         weapons_[currentWeaponIndex_].gameObject.SetActive(true);
+        UIManager.Instance.UpdateAmmo(weapons_[currentWeaponIndex_].TotalBulletAmmount);
+        if(onWeaponSwap_ != null) onWeaponSwap_();
     }
 
     public void SwapToPreviousWeapon()
@@ -51,5 +62,7 @@ public class WeaponInventory : MonoBehaviour
         weapons_[currentWeaponIndex_].gameObject.SetActive(false);
         currentWeaponIndex_--;
         weapons_[currentWeaponIndex_].gameObject.SetActive(true);
+        UIManager.Instance.UpdateAmmo(weapons_[currentWeaponIndex_].TotalBulletAmmount);
+        if(onWeaponSwap_ != null) onWeaponSwap_();
     }
 }

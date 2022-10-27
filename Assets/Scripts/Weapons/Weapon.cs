@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [Header("Weapon")]
+    [Header("Sound")]
+    public AudioClip shotSound_;
+
+
+    [Header("Animation")]
+    public AnimationCurve showAnimationCurve_;
+    public AnimationCurve shotAnimationCurve_;
+
+    [Header("Weapon Attributes")]
     public GameObject projectilePrefab_;
     public GameObject projectileSpawnRoot_;
     public float projectileSpeed_;
@@ -13,14 +21,6 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     protected int totalBulletAmount_;
     public int TotalBulletAmmount { get { return totalBulletAmount_; } }
-
-    [Header("Sound")]
-    public AudioClip shotSound_;
-
-
-    [Header("Animation")]
-    public AnimationCurve showAnimationCurve_;
-    public AnimationCurve shotAnimationCurve_;
 
     public delegate void OnShootDelegate();
     public event OnShootDelegate onShoot_;
