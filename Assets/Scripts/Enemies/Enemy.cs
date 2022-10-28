@@ -162,7 +162,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        //CheckState();
+        CheckState();
         ApplyDamageEffects();
     }
 }
