@@ -42,9 +42,8 @@ GameObject:
   - component: {fileID: 5393215578589016641}
   - component: {fileID: 5393215578589016654}
   - component: {fileID: 5393215578589016655}
-  - component: {fileID: 5393215578589016640}
   m_Layer: 8
-  m_Name: Capsule
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,20 +112,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5393215578589016640
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5393215578589016642}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7761109960169959653
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +157,7 @@ GameObject:
   - component: {fileID: 5420857361349278248}
   - component: {fileID: 8616685848737228376}
   - component: {fileID: 8604246019639660842}
+  - component: {fileID: 1867480895}
   m_Layer: 8
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -212,7 +198,7 @@ CharacterController:
   m_StepOffset: 0.25
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0.93, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &8616685848737228371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,10 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55919ac34a26952479f3fc91f777b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 12
-  SprintSpeed: 15
+  MoveSpeed: 15
   RotationSpeed: 1
-  SpeedChangeRate: 10
+  SpeedChangeRate: 5
   movementRotationMaxAngle_: 5
   movementRotationSmoothness_: 10
   JumpHeight: 1.5
@@ -400,3 +385,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth_: 100
+--- !u!114 &1867480895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616685848737228372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de4aaecd8fad0e409e6f4e44107bc80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefabs_:
+  - {fileID: 4658808056055342991, guid: 23e8c92a1cb66384488af3016e58bf54, type: 3}
+  - {fileID: 2038126600333338617, guid: 2f214d6d296541d43af47e3d4faf3533, type: 3}
+  - {fileID: 2372615892564564018, guid: cc991ed916e812a49ae0724857e8cc70, type: 3}

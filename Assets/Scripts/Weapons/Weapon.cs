@@ -88,9 +88,9 @@ public class Weapon : MonoBehaviour
                 Camera mainCamera = Camera.main;
                 RaycastHit hitInfo;
                 Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitInfo);
-                GameObject obj = hitInfo.collider.gameObject;
                 if (hitInfo.collider != null)
                 {
+                    GameObject obj = hitInfo.collider.gameObject;
                     if (obj.layer == 12)
                     {
                         if (obj.tag == "EnemyHead")
