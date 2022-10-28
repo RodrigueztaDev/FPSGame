@@ -15,6 +15,7 @@ public class EnemyWeapon : MonoBehaviour
 
     [Header("Weapon Attributes")]
     public GameObject projectileSpawnRoot_;
+    public GameObject projectilePrefab_;
     public float damage_;
 
     public delegate void OnShootDelegate();
@@ -49,7 +50,10 @@ public class EnemyWeapon : MonoBehaviour
         RaycastHit hitInfo;
 
         Vector3 direction = (target.position - transform.position + Vector3.up).normalized;
-        Physics.Raycast(transform.position, direction * 100.0f, out hitInfo);
+        Projectile b = Instantiate(projectilePrefab_, projectileSpawnRoot_.transform.position, Quaternion.identity).GetComponent<Projectile>();
+        b.Damage = damage_;
+        b.Shoot(direction);
+        /*Physics.Raycast(transform.position, direction * 100.0f, out hitInfo);
         Debug.DrawRay(transform.position, direction * 100.0f, Color.red, 5.0f);
         if (hitInfo.collider != null)
         {
@@ -58,7 +62,7 @@ public class EnemyWeapon : MonoBehaviour
             {
                 obj.GetComponent<HealthComponent>().TakeDamage(damage_);
             }
-        }
+        }*/
         audioSource_.PlayOneShot(shotSound_, 0.2f);
         fireParticle_.Play();
         OnShoot();

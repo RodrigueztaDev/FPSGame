@@ -241,6 +241,8 @@ MonoBehaviour:
   shotSound_: {fileID: 8300000, guid: 01afde374f566df4d8e736082da2e8c5, type: 3}
   fireParticle_: {fileID: 5601271226730766836}
   projectileSpawnRoot_: {fileID: 7397014526036734189}
+  projectilePrefab_: {fileID: 3424957694684638587, guid: fa8c3406699363f49b18739ba18f2d88,
+    type: 3}
   damage_: 10
 --- !u!1 &7397014526036734189
 GameObject:
