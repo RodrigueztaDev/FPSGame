@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Events;
 using Cinemachine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
@@ -86,7 +88,10 @@ public class FirstPersonController : MonoBehaviour
 	private StarterAssetsInputs _input;
 	private GameObject _mainCamera;
 
-	private const float _threshold = 0.01f;
+	private const float _threshold = 0.0f;
+
+	private Queue<UnityAction> inputQueue_;
+	private int weaponToChangeTo_;
 
 	private bool IsCurrentDeviceMouse
 	{
@@ -115,6 +120,7 @@ public class FirstPersonController : MonoBehaviour
 
 		weaponInventory_ = GetComponent<WeaponInventory>();
 		healthComponent_ = GetComponent<HealthComponent>();
+		inputQueue_ = new Queue<UnityAction>();
 	}
 
 	private void Start()
@@ -182,33 +188,50 @@ public class FirstPersonController : MonoBehaviour
 	}
 	private void ManageWeaponInventory()
 	{
-		// TODO: Change Weapon only if not shooting
-		// Add an input queue so if weapon is to be changed, change it after animation ends
 		if (weaponInventory_ != null)
 		{
 			if(_input.scrollUp)
             {
-				weaponInventory_.SwapToNextWeapon();
+				inputQueue_.Enqueue(weaponInventory_.SwapToNextWeapon);
 				_input.scrollUp = false;
             }
 
 			if (_input.scrollDown)
 			{
-				weaponInventory_.SwapToPreviousWeapon();
+				inputQueue_.Enqueue(weaponInventory_.SwapToPreviousWeapon);
 				_input.scrollDown = false;
 			}
+
 			if (_input.selectedWeapon != -1)
 			{
-				weaponInventory_.SwapToWeapon(_input.selectedWeapon);
+				weaponToChangeTo_ = _input.selectedWeapon;
+				inputQueue_.Enqueue(SwapToWeapon);
 				_input.selectedWeapon = -1;
 			}
 		}
 	}
 
+	private void SwapToWeapon()
+	{
+		weaponInventory_.SwapToWeapon(weaponToChangeTo_);
+	}
+
+	private void ProcessInputQueue()
+    {
+		if(weaponInventory_.CurrentWeapon.CanSwapWeapon)
+        {
+			for(int i = 0; i < inputQueue_.Count; ++i)
+			{
+				UnityAction action = inputQueue_.Dequeue();
+				action();
+			}
+        }
+    }
 
 	private void LateUpdate()
 	{
 		CameraRotation();
+		ProcessInputQueue();
 	}
 
 	private void GroundedCheck()

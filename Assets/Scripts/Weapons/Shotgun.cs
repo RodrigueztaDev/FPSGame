@@ -64,6 +64,7 @@ public class Shotgun : Weapon
                 isShootingAnimation_ = true;
                 currentBulletCooldown_ = bulletCooldown_;
                 currentshotAnimationTime_ = shotAnimationTime_;
+                canSwapWeapon_ = false;
             }
         }
         else
@@ -78,6 +79,7 @@ public class Shotgun : Weapon
         {
             showAnimationTime_ = 0.0f;
             isShowingAnimation_ = true;
+            canSwapWeapon_ = false;
         }
     }
 
@@ -109,6 +111,7 @@ public class Shotgun : Weapon
             {
                 transform.localRotation = Quaternion.identity;
                 isReloadingAnimation_ = false;
+                canSwapWeapon_ = true;
             }
         }
     }

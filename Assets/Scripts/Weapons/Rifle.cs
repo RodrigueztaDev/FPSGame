@@ -26,6 +26,7 @@ public class Rifle : Weapon
             {
                 transform.localRotation = Quaternion.identity;
                 isShootingAnimation_ = false;
+                canSwapWeapon_ = true;
             }
         }
     }

@@ -28,6 +28,11 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     protected int maxBulletAmount_;
     protected int totalBulletAmount_;
+    protected bool canSwapWeapon_;
+    public bool CanSwapWeapon
+    {
+        get { return canSwapWeapon_; }
+    }
     public int MaxBulletAmount { get { return maxBulletAmount_; } }
     public int TotalBulletAmmount { get { return totalBulletAmount_; } }
 
@@ -64,6 +69,7 @@ public class Weapon : MonoBehaviour
         audioSource_ = gameObject.AddComponent<AudioSource>();
 
         totalBulletAmount_ = maxBulletAmount_;
+        canSwapWeapon_ = true;
     }
 
     protected virtual void Update()
@@ -113,7 +119,7 @@ public class Weapon : MonoBehaviour
                 }
             case "Environment":
                 {
-                    Instantiate(bulletDecal_, hitPoint, Quaternion.LookRotation(mainCamera.transform.forward));
+                    Instantiate(bulletDecal_, hitPoint, Quaternion.LookRotation(hitNormal));
                     break;
                 }
         }
@@ -149,6 +155,7 @@ public class Weapon : MonoBehaviour
                 OnShoot();
                 isShootingAnimation_ = true;
                 currentBulletCooldown_ = bulletCooldown_;
+                canSwapWeapon_ = false;
             }
         }
         else
@@ -169,6 +176,7 @@ public class Weapon : MonoBehaviour
         {
             showAnimationTime_ = 0.0f;
             isShowingAnimation_ = true;
+            canSwapWeapon_ = false;
         }
     }
 
@@ -182,7 +190,8 @@ public class Weapon : MonoBehaviour
             {
                 transform.localRotation = Quaternion.identity;
                 isShowingAnimation_ = false;
-                OnShowAnimation();  
+                canSwapWeapon_ = true;
+                OnShowAnimation();
             }
         }
     }
@@ -197,6 +206,7 @@ public class Weapon : MonoBehaviour
             {
                 transform.localRotation = Quaternion.identity;
                 isShootingAnimation_ = false;
+                canSwapWeapon_ = true;
             }
         }
     }
