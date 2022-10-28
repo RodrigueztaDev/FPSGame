@@ -62,6 +62,15 @@ public class Shotgun : Weapon
         }
     }
 
+    public override void ShowAnimation()
+    {
+        if (!isShowingAnimation_ && !isShootingAnimation_ && !isReloadingAnimation_)
+        {
+            showAnimationTime_ = 0.0f;
+            isShowingAnimation_ = true;
+        }
+    }
+
     protected override void ShotUpdate()
     {
         if (isShootingAnimation_)
