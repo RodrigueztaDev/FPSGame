@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     public Text ammoText_;
     public Text ammoAmount_;
     public Text healthAmount_;
+    public Image normalCrosshair_;
+    public Image shotgunCrosshair_;
 
     public FirstPersonController player_;
     static private UIManager instance_;
@@ -41,6 +43,17 @@ public class UIManager : MonoBehaviour
     public void UpdateWeapon()
     {
         ammoText_.text = player_.weaponInventory_.CurrentWeapon.name;
+        Weapon.WeaponType type = player_.weaponInventory_.CurrentWeapon.Type;
+        if (type == Weapon.WeaponType.kShotgun || type == Weapon.WeaponType.kSuperShotgun)
+        {
+            shotgunCrosshair_.enabled = true;
+            normalCrosshair_.enabled = false;
+        }
+        else
+        {
+            normalCrosshair_.enabled = true;
+            shotgunCrosshair_.enabled = false;
+        }
     }
 
     public void UpdateHealth()
