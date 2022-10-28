@@ -19,15 +19,16 @@ public class Shotgun : Weapon
     private bool isReloadingAnimation_;
 
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         type_ = WeaponType.kShotgun;
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         ShotUpdate();
-        AnimationUpdate();
         ReloadUpdate();
     }
 

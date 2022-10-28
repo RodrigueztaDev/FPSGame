@@ -21,7 +21,9 @@ public class Weapon : MonoBehaviour
     public GameObject projectileSpawnRoot_;
     public float bulletCooldown_;
     [SerializeField]
+    protected int maxBulletAmount_;
     protected int totalBulletAmount_;
+    public int MaxBulletAmount { get { return maxBulletAmount_; } }
     public int TotalBulletAmmount { get { return totalBulletAmount_; } }
 
     public delegate void OnShootDelegate();
@@ -51,14 +53,15 @@ public class Weapon : MonoBehaviour
     protected bool isShootingAnimation_;
     protected float currentBulletCooldown_;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         Debug.Assert(projectileSpawnRoot_ != null);
+        totalBulletAmount_ = maxBulletAmount_;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        
+        AnimationUpdate();
     }
 
     protected void OnShoot()
@@ -98,6 +101,7 @@ public class Weapon : MonoBehaviour
     public void AddAmmo(int ammoToAdd)
     {
         totalBulletAmount_ += ammoToAdd;
+        if (totalBulletAmount_ > maxBulletAmount_) totalBulletAmount_ = maxBulletAmount_;
     }
 
     public virtual void ShowAnimation()

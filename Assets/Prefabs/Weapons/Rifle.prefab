@@ -295,11 +295,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  totalAnimationTime_: 1
   fireParticle_: {fileID: 5601271226730766836}
   projectileSpawnRoot_: {fileID: 7397014526036734189}
-  totalAnimationTime_: 1
   bulletCooldown_: 0.15
-  totalBulletAmount_: 600
+  maxBulletAmount_: 300
 --- !u!1 &7397014526036734189
 GameObject:
   m_ObjectHideFlags: 0

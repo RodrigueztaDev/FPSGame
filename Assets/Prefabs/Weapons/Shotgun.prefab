@@ -108,9 +108,9 @@ MonoBehaviour:
   fireParticle_: {fileID: 8855503227638157550}
   projectileSpawnRoot_: {fileID: 6485923745758678822}
   bulletCooldown_: 0.3
-  totalBulletAmount_: 60
+  maxBulletAmount_: 60
   pelletNumber_: 10
-  maxSpread_: 0.000005
+  maxSpread_: 0.05
   reloadAnimationCurve_:
     serializedVersion: 2
     m_Curve:

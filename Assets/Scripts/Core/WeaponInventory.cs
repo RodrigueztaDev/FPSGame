@@ -44,6 +44,11 @@ public class WeaponInventory : MonoBehaviour
         if(onWeaponSwap_ != null) onWeaponSwap_();
     }
 
+    public Weapon GetWeaponOfType(Weapon.WeaponType type)
+    {
+        return weapons_[(int)type];
+    }
+
     public void SwapToWeapon(int index)
     {
         if (index >= weapons_.Length || index < 0) return;

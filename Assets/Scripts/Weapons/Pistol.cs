@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         type_ = WeaponType.kPistol;
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         ShotUpdate();
-        AnimationUpdate();
     }
 }
