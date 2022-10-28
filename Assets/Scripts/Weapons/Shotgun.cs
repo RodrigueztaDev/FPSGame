@@ -40,7 +40,9 @@ public class Shotgun : Weapon
             {
                 Camera mainCamera = Camera.main;
                 RaycastHit hitInfo;
-                for(int i = 0; i < pelletNumber_; i++)
+                float totalDamage = 0.0f;
+                HealthComponent health = null;
+                for (int i = 0; i < pelletNumber_; i++)
                 {
                     Vector3 randomVector = new Vector3(Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_));
                     Physics.Raycast(mainCamera.transform.position, (mainCamera.transform.forward + randomVector) * 100.0f, out hitInfo);
@@ -52,15 +54,19 @@ public class Shotgun : Weapon
                         {
                             if (obj.tag == "EnemyHead")
                             {
-                                obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
+                                totalDamage += damage_ * headshotDamageMultiplier_;
+                                if (health == null) health = obj.transform.parent.GetComponent<HealthComponent>();
                             }
                             else
                             {
-                                obj.GetComponent<HealthComponent>().TakeDamage(damage_);
+                                totalDamage += damage_;
+                                if (health == null) health = obj.GetComponent<HealthComponent>();
                             }
                         }
                     }
                 }
+
+                if (health != null) health.TakeDamage(totalDamage);
 
                 totalBulletAmount_--;
                 audioSource_.PlayOneShot(shotSound_, 0.2f);

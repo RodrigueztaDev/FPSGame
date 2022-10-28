@@ -89,15 +89,18 @@ public class Weapon : MonoBehaviour
                 RaycastHit hitInfo;
                 Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitInfo);
                 GameObject obj = hitInfo.collider.gameObject;
-                if (obj.layer == 12)
+                if (hitInfo.collider != null)
                 {
-                    if(obj.tag == "EnemyHead")
+                    if (obj.layer == 12)
                     {
-                        obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
-                    }
-                    else
-                    {
-                        obj.GetComponent<HealthComponent>().TakeDamage(damage_);
+                        if (obj.tag == "EnemyHead")
+                        {
+                            obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
+                        }
+                        else
+                        {
+                            obj.GetComponent<HealthComponent>().TakeDamage(damage_);
+                        }
                     }
                 }
                 totalBulletAmount_--;
