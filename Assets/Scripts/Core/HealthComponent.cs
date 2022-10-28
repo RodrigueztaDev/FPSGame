@@ -31,7 +31,7 @@ public class HealthComponent : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         health_ = maxHealth_;
     }

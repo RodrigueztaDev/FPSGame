@@ -10,6 +10,7 @@ public class AmmoPickup : Pickup
     protected void PickUp(FirstPersonController player)
     {
         Weapon weapon = player.weaponInventory_.GetWeaponOfType(type_);
+        if (weapon.TotalBulletAmmount >= weapon.MaxBulletAmount) return;
         weapon.AddAmmo(amountToBeAdded_);
         if(weapon == player.weaponInventory_.CurrentWeapon) UIManager.Instance.UpdateAmmo(weapon.TotalBulletAmmount);
         Destroy(gameObject);
