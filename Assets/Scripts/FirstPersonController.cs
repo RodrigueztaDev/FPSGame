@@ -100,6 +100,11 @@ public class FirstPersonController : MonoBehaviour
 		}
 	}
 
+	private void OnDisable()
+	{
+		_playerInput.actions = null;
+	}
+
 	private void Awake()
 	{
 		// get a reference to our main camera
