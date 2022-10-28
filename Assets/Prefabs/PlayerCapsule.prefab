@@ -216,6 +216,8 @@ MonoBehaviour:
   SpeedChangeRate: 5
   movementRotationMaxAngle_: 5
   movementRotationSmoothness_: 10
+  crouchSpeed_: 7.5
+  crouchAnimationSpeed_: 7.5
   JumpHeight: 1.5
   Gravity: -30
   JumpTimeout: 0.1
@@ -269,6 +271,7 @@ MonoBehaviour:
   showAnimation: 0
   scrollUp: 0
   scrollDown: 0
+  crouch: 0
   selectedWeapon: 0
   analogMovement: 0
   cursorLocked: 1

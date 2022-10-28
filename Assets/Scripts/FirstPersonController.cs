@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Cinemachine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -20,6 +21,10 @@ public class FirstPersonController : MonoBehaviour
 	public float movementRotationMaxAngle_ = 10.0f;
 	[Tooltip("Rotation the camera will experience when moving side to side")]
 	public float movementRotationSmoothness_ = 1.0f;
+	[Tooltip("Move speed of the crouched character in m/s")]
+	public float crouchSpeed_;
+	[Tooltip("Speed at which the player crouches")]
+	public float crouchAnimationSpeed_;
 
 	[Space(10)]
 	[Tooltip("The height the player can jump")]
@@ -128,7 +133,29 @@ public class FirstPersonController : MonoBehaviour
 		JumpAndGravity();
 		GroundedCheck();
 		Move();
+		Crouch();
 		Shoot();
+	}
+
+	private void Crouch()
+    {
+		if(Grounded)
+        {
+			float desiredHeight = _input.crouch ? 1.0f : 2.0f;
+			float desiredCameraHeight = _input.crouch ? 0.6875f : 1.375f;
+			AdjustHeight(desiredHeight, desiredCameraHeight);
+		}
+	}
+
+	private void AdjustHeight(float height, float cameraHeight)
+    {
+		float center = height * 0.5f;
+		_controller.height = Mathf.Lerp(_controller.height, height, crouchAnimationSpeed_ * Time.deltaTime);
+		_controller.center = Vector3.Lerp(_controller.center, new Vector3(0.0f, center, 0.0f), crouchAnimationSpeed_ * Time.deltaTime);
+		transform.GetChild(0).localPosition = 
+			Vector3.Lerp(transform.GetChild(0).localPosition, 
+				new Vector3(transform.GetChild(0).localPosition.x, cameraHeight, transform.GetChild(0).localPosition.z),
+				crouchAnimationSpeed_ * Time.deltaTime);
 	}
 
 	private void Shoot()
@@ -211,7 +238,7 @@ public class FirstPersonController : MonoBehaviour
 	private void Move()
 	{
 		// set target speed based on move speed, sprint speed and if sprint is pressed
-		float targetSpeed = MoveSpeed;
+		float targetSpeed = _input.crouch ? crouchSpeed_ : MoveSpeed;
 
 		// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -253,14 +280,7 @@ public class FirstPersonController : MonoBehaviour
 
 		if(_input.move.x != 0.0f)
         {
-			if (_input.move.x > 0.0f)
-			{
-				cinemachineTargetYaw_ = -movementRotationMaxAngle_;
-			}
-			else
-			{
-				cinemachineTargetYaw_ = movementRotationMaxAngle_;
-			}
+			cinemachineTargetYaw_ = _input.move.x > 0.0f ? -movementRotationMaxAngle_ : movementRotationMaxAngle_;
 		}
 		else
 		{
@@ -272,7 +292,7 @@ public class FirstPersonController : MonoBehaviour
 
 	private void JumpAndGravity()
 	{
-		if (Grounded)
+		if (Grounded && !_input.crouch)
 		{
 			// reset the fall timeout timer
 			_fallTimeoutDelta = FallTimeout;

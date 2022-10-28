@@ -15,6 +15,7 @@ public class StarterAssetsInputs : MonoBehaviour
 	public bool showAnimation;
 	public bool scrollUp;
 	public bool scrollDown;
+	public bool crouch;
 	public int selectedWeapon;
 
 	[Header("Movement Settings")]
@@ -86,6 +87,11 @@ public class StarterAssetsInputs : MonoBehaviour
 		scrollDown = newScrollDownState;
 	}
 
+	public void CrouchInput(bool newCrouchState)
+	{
+		crouch = newCrouchState;
+	}
+
 	public void SelectedWeaponInput(int newSelectedWeapon)
 	{
 		selectedWeapon = newSelectedWeapon;
@@ -115,6 +121,11 @@ public class StarterAssetsInputs : MonoBehaviour
 	{
 		float z = value.Get<float>();
 		MouseScrollInput(z > 0, z < 0);
+	}
+
+	public void OnCrouch(InputValue value)
+	{
+		CrouchInput(value.isPressed);
 	}
 
 	public void OnSwapWeapon(InputValue value)
