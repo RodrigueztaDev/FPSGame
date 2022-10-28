@@ -12,8 +12,6 @@ public class FirstPersonController : MonoBehaviour
 	[Header("Player")]
 	[Tooltip("Move speed of the character in m/s")]
 	public float MoveSpeed = 4.0f;
-	[Tooltip("Sprint speed of the character in m/s")]
-	public float SprintSpeed = 6.0f;
 	[Tooltip("Rotation speed of the character")]
 	public float RotationSpeed = 1.0f;
 	[Tooltip("Acceleration and deceleration")]
@@ -152,6 +150,8 @@ public class FirstPersonController : MonoBehaviour
 	}
 	private void ManageWeaponInventory()
 	{
+		// TODO: Change Weapon only if not shooting
+		// Add an input queue so if weapon is to be changed, change it after animation ends
 		if (weaponInventory_ != null)
 		{
 			if(_input.scrollUp)
@@ -211,7 +211,7 @@ public class FirstPersonController : MonoBehaviour
 	private void Move()
 	{
 		// set target speed based on move speed, sprint speed and if sprint is pressed
-		float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+		float targetSpeed = MoveSpeed;
 
 		// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 

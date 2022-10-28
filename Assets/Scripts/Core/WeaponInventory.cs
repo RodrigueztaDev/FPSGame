@@ -52,7 +52,7 @@ public class WeaponInventory : MonoBehaviour
 
     public void SwapToWeapon(int index)
     {
-        if (index >= weapons_.Length || index < 0) return;
+        if (index >= weapons_.Length || index < 0 || index == currentWeaponIndex_) return;
 
         weapons_[currentWeaponIndex_].gameObject.SetActive(false);
         currentWeaponIndex_ = index;

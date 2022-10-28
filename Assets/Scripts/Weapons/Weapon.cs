@@ -21,6 +21,8 @@ public class Weapon : MonoBehaviour
     [Header("Weapon Attributes")]
     public GameObject projectileSpawnRoot_;
     public float bulletCooldown_;
+    public float damage_;
+    public float headshotDamageMultiplier_ = 1.5f;
     [SerializeField]
     protected int maxBulletAmount_;
     protected int totalBulletAmount_;
@@ -86,7 +88,20 @@ public class Weapon : MonoBehaviour
                 Camera mainCamera = Camera.main;
                 RaycastHit hitInfo;
                 Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitInfo);
-                Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 100.0f, Color.red, 5.0f);
+                GameObject obj = hitInfo.collider.gameObject;
+                if (obj.layer == 12)
+                {
+                    Debug.Log(hitInfo.collider.tag);
+                    if(hitInfo.collider.tag == "EnemyHead")
+                    {
+                        obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
+                    }
+                    else
+                    {
+                        obj.GetComponent<HealthComponent>().TakeDamage(damage_);
+                    }
+                }
+                //Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 100.0f, Color.red, 5.0f);
                 totalBulletAmount_--;
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();

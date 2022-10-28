@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e372a973293041e4c87474e84605402a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource_: {fileID: 0}
   shotSound_: {fileID: 8300000, guid: 01afde374f566df4d8e736082da2e8c5, type: 3}
   showAnimationCurve_:
     serializedVersion: 2
@@ -202,6 +203,7 @@ MonoBehaviour:
   fireParticle_: {fileID: 1982951589503610324}
   projectileSpawnRoot_: {fileID: 4901853887319523017}
   bulletCooldown_: 0.1
+  damage_: 10
   maxBulletAmount_: 150
 --- !u!1 &4901853887319523017
 GameObject:
