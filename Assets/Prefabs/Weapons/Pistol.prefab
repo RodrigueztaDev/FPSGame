@@ -209,6 +209,7 @@ MonoBehaviour:
   projectileSpawnRoot_: {fileID: 4901853887319523017}
   bulletCooldown_: 0.1
   damage_: 10
+  bulletSpeed_: 300
   headshotDamageMultiplier_: 1.5
   bulletDecal_: {fileID: 1738721053478405521, guid: 4f176b26051a57c4e9903f87770a3e0c,
     type: 3}
