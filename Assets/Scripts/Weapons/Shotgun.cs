@@ -18,7 +18,6 @@ public class Shotgun : Weapon
     private float currentReloadAnimationTime_;
     private bool isReloadingAnimation_;
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -39,43 +38,25 @@ public class Shotgun : Weapon
             if (!isShowingAnimation_ && !isReloadingAnimation_)
             {
                 Camera mainCamera = Camera.main;
-                RaycastHit hitInfo;
-                float totalDamage = 0.0f;
-                HealthComponent health = null;
+                RaycastHit hit;
                 for (int i = 0; i < pelletNumber_; i++)
                 {
                     Vector3 randomVector = new Vector3(Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_));
                     Vector3 pelletDirection = (mainCamera.transform.forward + randomVector) * 100.0f;
-                    Physics.Raycast(mainCamera.transform.position, pelletDirection, out hitInfo);
-                    //Debug.DrawRay(mainCamera.transform.position, pelletDirection, Color.red, 5.0f);
-                    if (hitInfo.collider != null)
+
+                    TrailRenderer trail = Instantiate(bulletTrailRenderer_, projectileSpawnRoot_.transform.position, Quaternion.identity).GetComponent<TrailRenderer>();
+                    if (Physics.Raycast(mainCamera.transform.position, pelletDirection, out hit))
                     {
-                        GameObject obj = hitInfo.collider.gameObject;
-                        switch (obj.tag)
-                        {
-                            case "EnemyHead":
-                                {
-                                    totalDamage += damage_ * headshotDamageMultiplier_;
-                                    if (health == null) health = obj.transform.parent.GetComponent<HealthComponent>();
-                                    break;
-                                }
-                            case "Enemy":
-                                {
-                                    totalDamage += damage_;
-                                    if (health == null) health = obj.GetComponent<HealthComponent>();
-                                    break;
-                                }
-                            case "Environment":
-                                {
-                                    Instantiate(bulletDecal_, hitInfo.point, Quaternion.LookRotation(pelletDirection));
-                                    break;
-                                }
-                        }
+                        StartCoroutine(UpdateTrail(trail, hit.point, hit.normal, hit.collider.gameObject));
+                    }
+                    else
+                    {
+                        StartCoroutine(UpdateTrail(trail,
+                            projectileSpawnRoot_.transform.position + pelletDirection * 100.0f,
+                            Vector3.zero,
+                            null));
                     }
                 }
-
-                if (health != null) health.TakeDamage(totalDamage);
-
                 totalBulletAmount_--;
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();

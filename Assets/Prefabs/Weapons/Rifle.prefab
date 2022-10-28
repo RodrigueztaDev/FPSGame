@@ -303,6 +303,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   totalAnimationTime_: 1
   fireParticle_: {fileID: 5601271226730766836}
+  bulletTrailRenderer_: {fileID: 2551730296617014002, guid: 5ca8c034e3478024487d7670274f78a2,
+    type: 3}
   projectileSpawnRoot_: {fileID: 7397014526036734189}
   bulletCooldown_: 0.15
   damage_: 5

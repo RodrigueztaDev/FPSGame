@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour
     private Vector3 target_;
     private NavMeshAgent agent_;
 
+    private bool tookDamageThisFrame_;
+
     protected virtual void Start()
     {
         healthComponent_ = GetComponent<HealthComponent>();
@@ -62,6 +64,8 @@ public class Enemy : MonoBehaviour
             damageParticlePool_[i] = particle.GetComponent<ParticleSystem>();
             particle.transform.parent = transform;
         }
+
+        tookDamageThisFrame_ = false;
     }
 
     protected virtual void CheckState()
@@ -125,11 +129,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTakeDamage()
     {
-        GetNextParticleFromPool().Play();
-        material_.color = Color.red;
-        CancelInvoke("DefaultMaterialColor");
-        Invoke("DefaultMaterialColor", materialChangeTime_);
-        audioSource_.PlayOneShot(RandomDamageSound(), 0.2f);
+        tookDamageThisFrame_ = true;
     }
 
     private void PlayDeathSound()
@@ -147,8 +147,22 @@ public class Enemy : MonoBehaviour
         material_.color = materialDefaultColor_;
     }
 
+    private void ApplyDamageEffects()
+    {
+        if (tookDamageThisFrame_)
+        {
+            GetNextParticleFromPool().Play();
+            material_.color = Color.red;
+            CancelInvoke("DefaultMaterialColor");
+            Invoke("DefaultMaterialColor", materialChangeTime_);
+            audioSource_.PlayOneShot(RandomDamageSound(), 0.2f);
+            tookDamageThisFrame_ = false;
+        }
+    }
+
     protected virtual void Update()
     {
-        CheckState();
+        //CheckState();
+        ApplyDamageEffects();
     }
 }
