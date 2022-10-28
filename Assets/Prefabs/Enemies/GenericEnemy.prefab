@@ -49,16 +49,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886f730913de04b4ab6d9a5c7020273b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state_: 0
   healthComponent_: {fileID: 0}
   audioSource_: {fileID: 0}
+  damageParticle_: {fileID: 4694321062198158028, guid: f9aa8cccf36b1bf41a07dc610a856216,
+    type: 3}
+  damageParticlePool_: []
   materialChangeTime_: 0.1
   attackCooldown: 1
+  particlePoolLenght_: 10
   weapon_: {fileID: 5501185257333230401}
   damageSounds_:
   - {fileID: 8300000, guid: f41aabe53b8b5574abc084cbd7bcf035, type: 3}
   - {fileID: 8300000, guid: bce74916e8cd6454ca7967c648abcc16, type: 3}
   - {fileID: 8300000, guid: b092b756fae5e334485b50fdd16559a1, type: 3}
   deathSound_: {fileID: 8300000, guid: 203cf6543705adb47954b17d625a5dcd, type: 3}
+  detectionRange_: 100
+  directionChangeChance_: 60
 --- !u!114 &1194276926878128984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +199,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

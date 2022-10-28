@@ -1150,10 +1150,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1336747609, guid: 328c36631406963429e5ddbc77e8aa89, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1194276926878128984, guid: 328c36631406963429e5ddbc77e8aa89,
         type: 3}
       propertyPath: maxHealth_
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1194276926878128985, guid: 328c36631406963429e5ddbc77e8aa89,
+        type: 3}
+      propertyPath: detectionRange_
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1194276926878128986, guid: 328c36631406963429e5ddbc77e8aa89,
         type: 3}
@@ -1188,7 +1197,7 @@ PrefabInstance:
     - target: {fileID: 1194276926878128987, guid: 328c36631406963429e5ddbc77e8aa89,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: -73.68
       objectReference: {fileID: 0}
     - target: {fileID: 1194276926878128987, guid: 328c36631406963429e5ddbc77e8aa89,
         type: 3}
@@ -1234,6 +1243,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: EnemyHead
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679985557995895845, guid: 328c36631406963429e5ddbc77e8aa89,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 328c36631406963429e5ddbc77e8aa89, type: 3}
