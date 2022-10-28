@@ -42,13 +42,20 @@ public class Shotgun : Weapon
                 RaycastHit hitInfo;
                 for(int i = 0; i < pelletNumber_; i++)
                 {
-                    Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitInfo);
                     Vector3 randomVector = new Vector3(Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_));
+                    Physics.Raycast(mainCamera.transform.position, (mainCamera.transform.forward + randomVector) * 100.0f, out hitInfo);
                     //Debug.DrawRay(mainCamera.transform.position, (mainCamera.transform.forward + randomVector) * 100.0f, Color.red, 5.0f);
                     GameObject obj = hitInfo.collider.gameObject;
                     if (obj.layer == 12)
                     {
-                        obj.GetComponent<HealthComponent>().TakeDamage(damage_);
+                        if (obj.tag == "EnemyHead")
+                        {
+                            obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
+                        }
+                        else
+                        {
+                            obj.GetComponent<HealthComponent>().TakeDamage(damage_);
+                        }
                     }
                 }
 

@@ -26,7 +26,8 @@ public class UIManager : MonoBehaviour
             weapon.onShoot_ += () => UpdateAmmo(weapon.TotalBulletAmmount);
         }
         player_.weaponInventory_.onWeaponSwap_ += () => UpdateWeapon();
-        player_.healthComponent_.onHealthChange_ += () => UpdateHealth();
+        player_.healthComponent_.onTakeDamage_ += () => UpdateHealth();
+        player_.healthComponent_.onHeal_ += () => UpdateHealth();
         UpdateAmmo(player_.weaponInventory_.CurrentWeapon.TotalBulletAmmount);
         UpdateWeapon();
         UpdateHealth();

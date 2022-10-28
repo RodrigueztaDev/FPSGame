@@ -91,8 +91,7 @@ public class Weapon : MonoBehaviour
                 GameObject obj = hitInfo.collider.gameObject;
                 if (obj.layer == 12)
                 {
-                    Debug.Log(hitInfo.collider.tag);
-                    if(hitInfo.collider.tag == "EnemyHead")
+                    if(obj.tag == "EnemyHead")
                     {
                         obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
                     }
@@ -101,7 +100,6 @@ public class Weapon : MonoBehaviour
                         obj.GetComponent<HealthComponent>().TakeDamage(damage_);
                     }
                 }
-                //Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 100.0f, Color.red, 5.0f);
                 totalBulletAmount_--;
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();

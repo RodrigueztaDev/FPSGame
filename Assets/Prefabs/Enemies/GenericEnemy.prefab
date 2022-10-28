@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthComponent_: {fileID: 0}
+  materialChangeTime_: 0.1
 --- !u!114 &1194276926878128984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,17 +267,17 @@ PrefabInstance:
     - target: {fileID: 1071495651633463064, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1613749947292925132, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1736179639808840122, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2038126600333338617, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
@@ -286,22 +287,22 @@ PrefabInstance:
     - target: {fileID: 2038126600333338617, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5655501172150872466, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7397014526036734189, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7778540824228739160, guid: 2f214d6d296541d43af47e3d4faf3533,
         type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f214d6d296541d43af47e3d4faf3533, type: 3}
