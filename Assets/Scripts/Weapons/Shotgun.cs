@@ -45,23 +45,31 @@ public class Shotgun : Weapon
                 for (int i = 0; i < pelletNumber_; i++)
                 {
                     Vector3 randomVector = new Vector3(Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_), Random.Range(-maxSpread_, maxSpread_));
-                    Physics.Raycast(mainCamera.transform.position, (mainCamera.transform.forward + randomVector) * 100.0f, out hitInfo);
-                    //Debug.DrawRay(mainCamera.transform.position, (mainCamera.transform.forward + randomVector) * 100.0f, Color.red, 5.0f);
-                    if(hitInfo.collider != null)
+                    Vector3 pelletDirection = (mainCamera.transform.forward + randomVector) * 100.0f;
+                    Physics.Raycast(mainCamera.transform.position, pelletDirection, out hitInfo);
+                    //Debug.DrawRay(mainCamera.transform.position, pelletDirection, Color.red, 5.0f);
+                    if (hitInfo.collider != null)
                     {
                         GameObject obj = hitInfo.collider.gameObject;
-                        if (obj.layer == 12)
+                        switch (obj.tag)
                         {
-                            if (obj.tag == "EnemyHead")
-                            {
-                                totalDamage += damage_ * headshotDamageMultiplier_;
-                                if (health == null) health = obj.transform.parent.GetComponent<HealthComponent>();
-                            }
-                            else
-                            {
-                                totalDamage += damage_;
-                                if (health == null) health = obj.GetComponent<HealthComponent>();
-                            }
+                            case "EnemyHead":
+                                {
+                                    totalDamage += damage_ * headshotDamageMultiplier_;
+                                    if (health == null) health = obj.transform.parent.GetComponent<HealthComponent>();
+                                    break;
+                                }
+                            case "Enemy":
+                                {
+                                    totalDamage += damage_;
+                                    if (health == null) health = obj.GetComponent<HealthComponent>();
+                                    break;
+                                }
+                            case "Environment":
+                                {
+                                    Instantiate(bulletDecal_, hitInfo.point, Quaternion.LookRotation(pelletDirection));
+                                    break;
+                                }
                         }
                     }
                 }

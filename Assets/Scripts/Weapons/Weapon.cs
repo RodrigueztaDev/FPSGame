@@ -23,6 +23,7 @@ public class Weapon : MonoBehaviour
     public float bulletCooldown_;
     public float damage_;
     public float headshotDamageMultiplier_ = 1.5f;
+    public GameObject bulletDecal_;
     [SerializeField]
     protected int maxBulletAmount_;
     protected int totalBulletAmount_;
@@ -91,16 +92,23 @@ public class Weapon : MonoBehaviour
                 if (hitInfo.collider != null)
                 {
                     GameObject obj = hitInfo.collider.gameObject;
-                    if (obj.layer == 12)
+                    switch (obj.tag)
                     {
-                        if (obj.tag == "EnemyHead")
-                        {
-                            obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
-                        }
-                        else
-                        {
-                            obj.GetComponent<HealthComponent>().TakeDamage(damage_);
-                        }
+                        case "EnemyHead":
+                            {
+                                obj.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
+                                break;
+                            }
+                        case "Enemy":
+                            {
+                                obj.GetComponent<HealthComponent>().TakeDamage(damage_);
+                                break;
+                            }
+                        case "Environment":
+                            {
+                                Instantiate(bulletDecal_, hitInfo.point, Quaternion.LookRotation(mainCamera.transform.forward));
+                                break;
+                            }
                     }
                 }
                 totalBulletAmount_--;
