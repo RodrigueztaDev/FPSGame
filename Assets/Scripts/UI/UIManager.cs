@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
 {
     [Header("Canvas Components")]
     public Text ammoText_;
+    public Text ammoAmount_;
+    public Text healthAmount_;
 
     public FirstPersonController player_;
     static private UIManager instance_;
@@ -23,11 +25,23 @@ public class UIManager : MonoBehaviour
             weapon.onShowAnimation_ += () => UpdateAmmo(weapon.TotalBulletAmmount);
             weapon.onShoot_ += () => UpdateAmmo(weapon.TotalBulletAmmount);
         }
+        player_.weaponInventory_.onWeaponSwap_ += () => UpdateWeapon();
         UpdateAmmo(player_.weaponInventory_.CurrentWeapon.TotalBulletAmmount);
+        UpdateWeapon();
     }
 
     public void UpdateAmmo(float currentAmmo)
     {
-        ammoText_.text = currentAmmo.ToString();
+        ammoAmount_.text = currentAmmo.ToString();
+    }
+
+    public void UpdateWeapon()
+    {
+        ammoText_.text = player_.weaponInventory_.CurrentWeapon.name;
+    }
+
+    public void UpdateHealth()
+    {
+        healthAmount_.text = player_.healthComponent_.Health.ToString();
     }
 }

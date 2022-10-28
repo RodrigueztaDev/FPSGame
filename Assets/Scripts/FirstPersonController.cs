@@ -56,6 +56,9 @@ public class FirstPersonController : MonoBehaviour
 	[Header("Weapons")]
 	public WeaponInventory weaponInventory_;
 
+	[Header("Health")]
+	public HealthComponent healthComponent_;
+
 	// cinemachine
 	private float _cinemachineTargetPitch;
 	private float cinemachineTargetYaw_;

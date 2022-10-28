@@ -11,7 +11,7 @@ public class AmmoPickup : Pickup
     {
         Weapon weapon = player.weaponInventory_.GetWeaponOfType(type_);
         weapon.AddAmmo(amountToBeAdded_);
-        UIManager.Instance.UpdateAmmo(weapon.TotalBulletAmmount);
+        if(weapon == player.weaponInventory_.CurrentWeapon) UIManager.Instance.UpdateAmmo(weapon.TotalBulletAmmount);
         Destroy(gameObject);
     }
 
