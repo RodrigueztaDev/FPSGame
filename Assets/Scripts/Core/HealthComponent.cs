@@ -13,13 +13,22 @@ public class HealthComponent : MonoBehaviour
         get { return health_; }
     }
 
+    public delegate void OnHealthChangeDelegate();
+    public event OnHealthChangeDelegate onHealthChange_;
+
     public void TakeDamage(float damage)
     {
         health_ -= damage;
-        if(health_ <= 0)
+        if(onHealthChange_ != null) onHealthChange_();
+        if (health_ <= 0.0f)
         {
             Die();
         }
+    }
+
+    private void Start()
+    {
+        health_ = maxHealth_;
     }
 
     public void Heal(float health)
@@ -29,6 +38,7 @@ public class HealthComponent : MonoBehaviour
         {
             health_ = maxHealth_;
         }
+        if(onHealthChange_ != null) onHealthChange_();
     }
 
     public void Die()

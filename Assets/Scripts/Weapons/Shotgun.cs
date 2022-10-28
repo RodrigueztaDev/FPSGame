@@ -48,7 +48,7 @@ public class Shotgun : Weapon
                 }
 
                 totalBulletAmount_--;
-                AudioManager.PlaySoundAtLocation(shotSound_, transform.position, 0.2f);
+                audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();
                 OnShoot();
                 isShootingAnimation_ = true;

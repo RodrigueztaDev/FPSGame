@@ -28,7 +28,7 @@ public class WeaponInventory : MonoBehaviour
             weapons_[i] = Instantiate(weaponPrefabs_[i], weaponRootTransform.position, Quaternion.identity).GetComponent<Weapon>();
             weapons_[i].transform.parent = weaponRootTransform;
             weapons_[i].gameObject.SetActive(false);
-            weapons_[i].name = weapons_[i].name.Remove(weapons_[i].name.Length - 7); 
+            weapons_[i].name = weapons_[i].name.Remove(weapons_[i].name.Length - 7); // Remove "(Clone)" from weapon name
         }
         currentWeaponIndex_ = 0;
         weapons_[currentWeaponIndex_].gameObject.SetActive(true);

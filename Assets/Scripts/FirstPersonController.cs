@@ -106,6 +106,7 @@ public class FirstPersonController : MonoBehaviour
 		}
 
 		weaponInventory_ = GetComponent<WeaponInventory>();
+		healthComponent_ = GetComponent<HealthComponent>();
 	}
 
 	private void Start()

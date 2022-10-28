@@ -245,6 +245,7 @@ MonoBehaviour:
   TopClamp: 89
   BottomClamp: -89
   weaponInventory_: {fileID: 0}
+  healthComponent_: {fileID: 0}
 --- !u!114 &1978471637655604388
 MonoBehaviour:
   m_ObjectHideFlags: 0

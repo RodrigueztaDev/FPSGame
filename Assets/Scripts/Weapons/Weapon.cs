@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [Header("Sound")]
+    public AudioSource audioSource_;
     public AudioClip shotSound_;
 
 
@@ -56,6 +57,8 @@ public class Weapon : MonoBehaviour
     protected virtual void Awake()
     {
         Debug.Assert(projectileSpawnRoot_ != null);
+        audioSource_ = gameObject.AddComponent<AudioSource>();
+
         totalBulletAmount_ = maxBulletAmount_;
     }
 
@@ -85,7 +88,7 @@ public class Weapon : MonoBehaviour
                 Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hitInfo);
                 Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 100.0f, Color.red, 5.0f);
                 totalBulletAmount_--;
-                AudioManager.PlaySoundAtLocation(shotSound_, transform.position, 0.2f);
+                audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();
                 OnShoot();
                 isShootingAnimation_ = true;
