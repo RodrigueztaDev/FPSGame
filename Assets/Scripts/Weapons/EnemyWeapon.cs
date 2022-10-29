@@ -47,9 +47,15 @@ public class EnemyWeapon : MonoBehaviour
 
     public virtual void Shoot(Transform target)
     {
-        RaycastHit hitInfo;
+        CharacterController character = target.GetComponent<CharacterController>();
 
-        Vector3 direction = (target.position - transform.position + Vector3.up).normalized;
+        Vector3 targetPosition = target.position;
+        if (character != null)
+        {
+            targetPosition = new Vector3 (targetPosition.x, targetPosition.y + character.height * 0.5f, targetPosition.z);
+        }
+
+        Vector3 direction = (targetPosition - transform.position).normalized;
         Projectile b = Instantiate(projectilePrefab_, projectileSpawnRoot_.transform.position, Quaternion.identity).GetComponent<Projectile>();
         b.Damage = damage_;
         b.Shoot(direction);
