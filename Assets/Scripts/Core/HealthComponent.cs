@@ -7,6 +7,7 @@ public class HealthComponent : MonoBehaviour
     [Header("Health Attributes")]
     public float maxHealth_;
 
+    [SerializeField]
     private float health_;
     public float Health
     {

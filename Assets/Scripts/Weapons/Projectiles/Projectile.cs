@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
     [Header("Bullet Attributes")]
     public float speed_;
 
-    private float damage_;
+    protected float damage_;
     public float Damage
     {
         get { return damage_; }
@@ -19,12 +19,17 @@ public class Projectile : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(direction * speed_);
     }
 
+    protected virtual void OnCollition(GameObject o)
+    {
+        if (o.tag == "Player")
+        {
+            o.GetComponent<HealthComponent>().TakeDamage(damage_);
+            Destroy(gameObject);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        GameObject obj = other.gameObject;
-        if (obj.tag == "Player")
-        {
-            obj.GetComponent<HealthComponent>().TakeDamage(damage_);
-        }
+        OnCollition(other.gameObject);
     }
 }

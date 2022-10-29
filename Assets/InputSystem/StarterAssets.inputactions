@@ -343,6 +343,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4da1875d-f760-4321-ad45-7e79af157c96",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "Scale(factor=4)",
+                    "groups": "KeyboardMouse",
+                    "action": "SwapWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3495c74e-210c-4dbc-88fc-90b3bce9c07b",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "Press(behavior=2)",

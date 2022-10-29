@@ -56,8 +56,8 @@ public class Weapon : MonoBehaviour
         get { return type_; }
     }
 
-    private float showAnimationTime_;
-    private float shotAnimationTime_;
+    protected float showAnimationTime_;
+    protected float shotAnimationTime_;
     protected float currentShowAnimationTime_;
     protected float currentShotAnimationTime_;
     protected bool canShoot_;
@@ -92,7 +92,7 @@ public class Weapon : MonoBehaviour
         if(onShowAnimation_ != null) onShowAnimation_();
     }
 
-    protected IEnumerator UpdateTrail(TrailRenderer trail, Vector3 hitPoint, Vector3 hitNormal, GameObject hitObject/*, bool madeImpact*/)
+    protected IEnumerator UpdateTrail(TrailRenderer trail, Vector3 hitPoint, Vector3 hitNormal, GameObject hitObject)
     {
         Vector3 startPosition = trail.transform.position;
         float distance = Vector3.Distance(trail.transform.position, hitPoint);
@@ -111,23 +111,23 @@ public class Weapon : MonoBehaviour
         {
             Camera mainCamera = Camera.main;
             switch (hitObject.tag)
-        {
-            case "EnemyHead":
-                {
-                    hitObject.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
-                    break;
-                }
-            case "Enemy":
-                {
-                    hitObject.GetComponent<HealthComponent>().TakeDamage(damage_);
-                    break;
-                }
-            case "Environment":
-                {
-                    Instantiate(bulletDecal_, hitPoint, Quaternion.LookRotation(hitNormal));
-                    break;
-                }
-        }
+            {
+                case "EnemyHead":
+                    {
+                        hitObject.transform.parent.GetComponent<HealthComponent>().TakeDamage(damage_ * headshotDamageMultiplier_);
+                        break;
+                    }
+                case "Enemy":
+                    {
+                        hitObject.GetComponent<HealthComponent>().TakeDamage(damage_);
+                        break;
+                    }
+                case "Environment":
+                    {
+                        Instantiate(bulletDecal_, hitPoint, Quaternion.LookRotation(hitNormal));
+                        break;
+                    }
+            }
         }
 
         Destroy(trail.gameObject, trail.time);
@@ -156,9 +156,9 @@ public class Weapon : MonoBehaviour
 
                 totalBulletAmount_--;
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
-                fireParticle_.Play();
+                if(fireParticle_ != null) fireParticle_.Play();
                 OnShoot();
-                StartCoroutine("ShotUpdate");
+                StartCoroutine(ShotUpdate());
             }
         }
         else
@@ -177,7 +177,7 @@ public class Weapon : MonoBehaviour
     {
         if (!IsShooting() && !IsShowingAnimation())
         {
-            StartCoroutine("AnimationUpdate");
+            StartCoroutine(AnimationUpdate());
             OnShowAnimation();
         }
     }

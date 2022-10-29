@@ -62,7 +62,7 @@ public class Shotgun : Weapon
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();
                 OnShoot();
-                StartCoroutine("ShotUpdate");
+                StartCoroutine(ShotUpdate());
             }
         }
         else
@@ -80,7 +80,7 @@ public class Shotgun : Weapon
     {
         if (!IsShowingAnimation() && !IsShooting() && !isReloading())
         {
-            StartCoroutine("AnimationUpdate");
+            StartCoroutine(AnimationUpdate());
             OnShowAnimation();
         }
     }
@@ -97,7 +97,7 @@ public class Shotgun : Weapon
             yield return null;
         }
         transform.localPosition = Vector3.zero;
-        StartCoroutine("ReloadUpdate");
+        StartCoroutine(ReloadUpdate());
     }
 
     protected virtual IEnumerator ReloadUpdate()
