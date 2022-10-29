@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
-
     [Header("Shotgun Attributes")]
     public int pelletNumber_;
     public float maxSpread_;
@@ -50,7 +49,16 @@ public class Shotgun : Weapon
                             null));
                     }
                 }
-                totalBulletAmount_--;
+
+                if(type_ == WeaponType.kShotgun)
+                {
+                    totalBulletAmount_--;
+                }
+                else
+                {
+                    totalBulletAmount_ -= 2;
+                }
+
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();
                 OnShoot();

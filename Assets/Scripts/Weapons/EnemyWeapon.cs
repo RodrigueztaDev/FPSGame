@@ -53,16 +53,6 @@ public class EnemyWeapon : MonoBehaviour
         Projectile b = Instantiate(projectilePrefab_, projectileSpawnRoot_.transform.position, Quaternion.identity).GetComponent<Projectile>();
         b.Damage = damage_;
         b.Shoot(direction);
-        /*Physics.Raycast(transform.position, direction * 100.0f, out hitInfo);
-        Debug.DrawRay(transform.position, direction * 100.0f, Color.red, 5.0f);
-        if (hitInfo.collider != null)
-        {
-            GameObject obj = hitInfo.collider.gameObject;
-            if (obj.tag == "Player")
-            {
-                obj.GetComponent<HealthComponent>().TakeDamage(damage_);
-            }
-        }*/
         audioSource_.PlayOneShot(shotSound_, 0.2f);
         fireParticle_.Play();
         OnShoot();
