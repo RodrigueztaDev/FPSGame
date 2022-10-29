@@ -182,7 +182,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.05
+      time: 0.1
       value: -22.5
       inSlope: 0
       outSlope: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.1
+      time: 0.2
       value: 0
       inSlope: 0
       outSlope: 0
@@ -202,12 +202,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalAnimationTime_: 1
   fireParticle_: {fileID: 1982951589503610324}
   bulletTrailRenderer_: {fileID: 2551730296617014002, guid: 5ca8c034e3478024487d7670274f78a2,
     type: 3}
   projectileSpawnRoot_: {fileID: 4901853887319523017}
-  bulletCooldown_: 0.1
   damage_: 10
   bulletSpeed_: 300
   headshotDamageMultiplier_: 1.5

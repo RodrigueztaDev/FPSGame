@@ -10,24 +10,19 @@ public class Rifle : Weapon
         type_ = WeaponType.kRifle;
     }
 
-    protected override void Update()
+    protected override IEnumerator ShotUpdate()
     {
-        base.Update();
-        ShotUpdate();
-    }
-
-    protected override void ShotUpdate()
-    {
-        if (isShootingAnimation_)
+        currentShotAnimationTime_ = 0.0f;
+        canSwapWeapon_ = false;
+        canShoot_ = false;
+        while (IsShooting())
         {
-            currentBulletCooldown_ -= Time.deltaTime;
-            transform.localPosition = new Vector3(0.0f, 0.0f, shotAnimationCurve_.Evaluate(currentBulletCooldown_));
-            if (currentBulletCooldown_ <= 0.0f)
-            {
-                transform.localRotation = Quaternion.identity;
-                isShootingAnimation_ = false;
-                canSwapWeapon_ = true;
-            }
+            currentShotAnimationTime_ += Time.deltaTime;
+            transform.localPosition = new Vector3(0.0f, 0.0f, shotAnimationCurve_.Evaluate(currentShotAnimationTime_));
+            yield return null;
         }
+        transform.localPosition = Vector3.zero;
+        canSwapWeapon_ = true;
+        canShoot_ = true;
     }
 }

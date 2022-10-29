@@ -11,31 +11,24 @@ public class Shotgun : Weapon
 
     [Header("Shotgun Animation")]
     public AnimationCurve reloadAnimationCurve_;
-    public float reloadAnimationTime_;
-    public float shotAnimationTime_;
 
-    private float currentshotAnimationTime_;
+    private float reloadAnimationTime_;
     private float currentReloadAnimationTime_;
-    private bool isReloadingAnimation_;
 
     protected override void Awake()
     {
         base.Awake();
         type_ = WeaponType.kShotgun;
-    }
 
-    protected override void Update()
-    {
-        base.Update();
-        ShotUpdate();
-        ReloadUpdate();
+        reloadAnimationTime_ = shotAnimationCurve_.keys[reloadAnimationCurve_.keys.Length - 1].time;
+        currentReloadAnimationTime_ = reloadAnimationTime_;
     }
 
     public override void Shoot()
     {
-        if (totalBulletAmount_ > 0 && currentBulletCooldown_ <= 0.0f)
+        if (totalBulletAmount_ > 0)
         {
-            if (!isShowingAnimation_ && !isReloadingAnimation_)
+            if (canShoot_)
             {
                 Camera mainCamera = Camera.main;
                 RaycastHit hit;
@@ -61,10 +54,7 @@ public class Shotgun : Weapon
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();
                 OnShoot();
-                isShootingAnimation_ = true;
-                currentBulletCooldown_ = bulletCooldown_;
-                currentshotAnimationTime_ = shotAnimationTime_;
-                canSwapWeapon_ = false;
+                StartCoroutine("ShotUpdate");
             }
         }
         else
@@ -73,46 +63,47 @@ public class Shotgun : Weapon
         }
     }
 
+    protected bool isReloading()
+    {
+        return currentReloadAnimationTime_ < reloadAnimationTime_;
+    }
+
     public override void ShowAnimation()
     {
-        if (!isShowingAnimation_ && !isShootingAnimation_ && !isReloadingAnimation_)
+        if (!IsShowingAnimation() && !IsShooting() && !isReloading())
         {
-            showAnimationTime_ = 0.0f;
-            isShowingAnimation_ = true;
-            canSwapWeapon_ = false;
+            StartCoroutine("AnimationUpdate");
+            OnShowAnimation();
         }
     }
 
-    protected override void ShotUpdate()
+    protected override IEnumerator ShotUpdate()
     {
-        if (isShootingAnimation_)
+        currentShotAnimationTime_ = 0.0f;
+        canSwapWeapon_ = false;
+        canShoot_ = false;
+        while (IsShooting())
         {
-            currentBulletCooldown_ -= Time.deltaTime;
-            currentshotAnimationTime_ -= Time.deltaTime;
-            transform.localPosition = new Vector3(0.0f, 0.0f, shotAnimationCurve_.Evaluate(currentshotAnimationTime_));
-            if (currentshotAnimationTime_ <= 0.0f)
-            {
-                transform.localRotation = Quaternion.identity;
-                isShootingAnimation_ = false;
-                isReloadingAnimation_ = true;
-                currentReloadAnimationTime_ = reloadAnimationTime_;
-            }
+            currentShotAnimationTime_ += Time.deltaTime;
+            transform.localPosition = new Vector3(0.0f, 0.0f, shotAnimationCurve_.Evaluate(currentShotAnimationTime_));
+            yield return null;
         }
+        transform.localPosition = Vector3.zero;
+        StartCoroutine("ReloadUpdate");
     }
 
-    protected void ReloadUpdate()
+    protected IEnumerator ReloadUpdate()
     {
-        if (isReloadingAnimation_)
-        {
-            currentBulletCooldown_ -= Time.deltaTime;
-            currentReloadAnimationTime_ -= Time.deltaTime;
+        currentReloadAnimationTime_ = 0.0f;
+        canSwapWeapon_ = false;
+        while (isReloading())
+        { 
+            currentReloadAnimationTime_ += Time.deltaTime;
             transform.localRotation = Quaternion.Euler(new Vector3(reloadAnimationCurve_.Evaluate(currentReloadAnimationTime_), 0f, 0f));
-            if (currentReloadAnimationTime_ <= 0.0f)
-            {
-                transform.localRotation = Quaternion.identity;
-                isReloadingAnimation_ = false;
-                canSwapWeapon_ = true;
-            }
+            yield return null;
         }
+        transform.localRotation = Quaternion.identity;
+        canSwapWeapon_ = true;
+        canShoot_ = true;
     }
 }

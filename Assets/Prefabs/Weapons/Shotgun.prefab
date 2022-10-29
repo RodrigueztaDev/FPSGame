@@ -86,7 +86,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.1
+      time: 0.15
       value: -0.2
       inSlope: 0
       outSlope: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2
+      time: 0.3
       value: 0
       inSlope: 0
       outSlope: 0
@@ -106,12 +106,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalAnimationTime_: 1
   fireParticle_: {fileID: 8855503227638157550}
   bulletTrailRenderer_: {fileID: 2551730296617014002, guid: 5ca8c034e3478024487d7670274f78a2,
     type: 3}
   projectileSpawnRoot_: {fileID: 6485923745758678822}
-  bulletCooldown_: 0.3
   damage_: 10
   bulletSpeed_: 300
   headshotDamageMultiplier_: 1.5
@@ -125,7 +123,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 360
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -135,15 +133,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.15
       value: 180
-      inSlope: 1200
-      outSlope: 1200
+      inSlope: -1200
+      outSlope: -1200
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.3
-      value: 360
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -153,8 +151,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  reloadAnimationTime_: 0.3
-  shotAnimationTime_: 0.2
+  reloadAnimationTimeOffset_: 0
 --- !u!1 &2647552404022046321
 GameObject:
   m_ObjectHideFlags: 0

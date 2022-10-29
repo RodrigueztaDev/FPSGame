@@ -9,10 +9,4 @@ public class Pistol : Weapon
         base.Awake();
         type_ = WeaponType.kPistol;
     }
-
-    protected override void Update()
-    {
-        base.Update();
-        ShotUpdate();
-    }
 }

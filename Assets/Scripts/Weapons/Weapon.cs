@@ -12,7 +12,6 @@ public class Weapon : MonoBehaviour
     [Header("Animation")]
     public AnimationCurve showAnimationCurve_;
     public AnimationCurve shotAnimationCurve_;
-    public float totalAnimationTime_;
 
     [Header("Particle Effects")]
     public ParticleSystem fireParticle_;
@@ -20,7 +19,6 @@ public class Weapon : MonoBehaviour
 
     [Header("Weapon Attributes")]
     public GameObject projectileSpawnRoot_;
-    public float bulletCooldown_;
     public float damage_;
     public float bulletSpeed_ = 100.0f;
     public float headshotDamageMultiplier_ = 1.5f;
@@ -58,10 +56,11 @@ public class Weapon : MonoBehaviour
         get { return type_; }
     }
 
-    protected bool isShowingAnimation_;
-    protected float showAnimationTime_;
-    protected bool isShootingAnimation_;
-    protected float currentBulletCooldown_;
+    private float showAnimationTime_;
+    private float shotAnimationTime_;
+    protected float currentShowAnimationTime_;
+    protected float currentShotAnimationTime_;
+    protected bool canShoot_;
 
     protected virtual void Awake()
     {
@@ -70,11 +69,17 @@ public class Weapon : MonoBehaviour
 
         totalBulletAmount_ = maxBulletAmount_;
         canSwapWeapon_ = true;
+        showAnimationTime_ = showAnimationCurve_.keys[showAnimationCurve_.keys.Length - 1].time;
+        shotAnimationTime_ = shotAnimationCurve_.keys[showAnimationCurve_.keys.Length - 1].time;
+        currentShowAnimationTime_ = showAnimationTime_;
+        currentShotAnimationTime_ = shotAnimationTime_;
+
+        canShoot_ = true;
     }
 
     protected virtual void Update()
     {
-        AnimationUpdate();
+
     }
 
     protected void OnShoot()
@@ -130,9 +135,9 @@ public class Weapon : MonoBehaviour
 
     public virtual void Shoot()
     {
-        if (totalBulletAmount_ > 0 && currentBulletCooldown_ <= 0.0f)
+        if (totalBulletAmount_ > 0)
         {
-            if (!isShowingAnimation_)
+            if (canShoot_)
             {
                 Camera mainCamera = Camera.main;
                 TrailRenderer trail = Instantiate(bulletTrailRenderer_, projectileSpawnRoot_.transform.position, Quaternion.identity).GetComponent<TrailRenderer>();
@@ -153,9 +158,7 @@ public class Weapon : MonoBehaviour
                 audioSource_.PlayOneShot(shotSound_, 0.2f);
                 fireParticle_.Play();
                 OnShoot();
-                isShootingAnimation_ = true;
-                currentBulletCooldown_ = bulletCooldown_;
-                canSwapWeapon_ = false;
+                StartCoroutine("ShotUpdate");
             }
         }
         else
@@ -172,42 +175,53 @@ public class Weapon : MonoBehaviour
 
     public virtual void ShowAnimation()
     {
-        if (!isShowingAnimation_ && !isShootingAnimation_)
+        if (!IsShooting() && !IsShowingAnimation())
         {
-            showAnimationTime_ = 0.0f;
-            isShowingAnimation_ = true;
-            canSwapWeapon_ = false;
+            StartCoroutine("AnimationUpdate");
+            OnShowAnimation();
         }
     }
 
-    protected virtual void AnimationUpdate()
+    protected bool IsShowingAnimation()
     {
-        if (isShowingAnimation_)
-        {
-            showAnimationTime_ += Time.deltaTime;
-            transform.localRotation = Quaternion.Euler(new Vector3(showAnimationCurve_.Evaluate(showAnimationTime_), 0f, 0f));
-            if (showAnimationTime_ >= totalAnimationTime_)
-            {
-                transform.localRotation = Quaternion.identity;
-                isShowingAnimation_ = false;
-                canSwapWeapon_ = true;
-                OnShowAnimation();
-            }
-        }
+        return currentShowAnimationTime_ < showAnimationTime_;
     }
 
-    protected virtual void ShotUpdate()
+    protected bool IsShooting()
     {
-        if (isShootingAnimation_)
+        return currentShotAnimationTime_ < shotAnimationTime_;
+    }
+
+    protected virtual IEnumerator AnimationUpdate()
+    {
+        currentShowAnimationTime_ = 0.0f;
+        canSwapWeapon_ = false;
+        canShoot_ = false;
+        while(IsShowingAnimation())
         {
-            currentBulletCooldown_ -= Time.deltaTime;
-            transform.localRotation = Quaternion.Euler(new Vector3(shotAnimationCurve_.Evaluate(currentBulletCooldown_), 0f, 0f));
-            if (currentBulletCooldown_ <= 0.0f)
-            {
-                transform.localRotation = Quaternion.identity;
-                isShootingAnimation_ = false;
-                canSwapWeapon_ = true;
-            }
+            currentShowAnimationTime_ += Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(new Vector3(showAnimationCurve_.Evaluate(currentShowAnimationTime_), 0f, 0f));
+            yield return null;
         }
+
+        transform.localRotation = Quaternion.identity;
+        canSwapWeapon_ = true;
+        canShoot_ = true;
+    }
+
+    protected virtual IEnumerator ShotUpdate()
+    {
+        currentShotAnimationTime_ = 0.0f;
+        canSwapWeapon_ = false;
+        canShoot_ = false;
+        while (IsShooting())
+        {
+            currentShotAnimationTime_ += Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(new Vector3(shotAnimationCurve_.Evaluate(currentShotAnimationTime_), 0f, 0f));
+            yield return null;
+        }
+        transform.localRotation = Quaternion.identity;
+        canSwapWeapon_ = true;
+        canShoot_ = true;
     }
 }
