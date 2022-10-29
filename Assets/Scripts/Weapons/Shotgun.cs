@@ -12,15 +12,15 @@ public class Shotgun : Weapon
     [Header("Shotgun Animation")]
     public AnimationCurve reloadAnimationCurve_;
 
-    private float reloadAnimationTime_;
-    private float currentReloadAnimationTime_;
+    protected float reloadAnimationTime_;
+    protected float currentReloadAnimationTime_;
 
     protected override void Awake()
     {
         base.Awake();
         type_ = WeaponType.kShotgun;
 
-        reloadAnimationTime_ = shotAnimationCurve_.keys[reloadAnimationCurve_.keys.Length - 1].time;
+        reloadAnimationTime_ = reloadAnimationCurve_.keys[reloadAnimationCurve_.keys.Length - 1].time;
         currentReloadAnimationTime_ = reloadAnimationTime_;
     }
 
@@ -92,7 +92,7 @@ public class Shotgun : Weapon
         StartCoroutine("ReloadUpdate");
     }
 
-    protected IEnumerator ReloadUpdate()
+    protected virtual IEnumerator ReloadUpdate()
     {
         currentReloadAnimationTime_ = 0.0f;
         canSwapWeapon_ = false;
