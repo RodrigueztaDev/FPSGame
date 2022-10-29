@@ -60,7 +60,11 @@ public class Crossbow : Weapon
         }
         else
         {
-            Destroy(trail.gameObject, trail.time);
+            Camera mainCamera = Camera.main;
+            StartCoroutine(UpdateTrail(trail,
+                        projectileSpawnRoot_.transform.position + mainCamera.transform.forward * 100.0f,
+                        Vector3.zero,
+                        null));
         }
     }
 
