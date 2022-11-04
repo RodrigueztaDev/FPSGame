@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
         UpdateAmmo(player_.weaponInventory_.CurrentWeapon.TotalBulletAmmount);
         UpdateWeapon();
         UpdateHealth();
+        SetComboValue(0.0f);
     }
 
     public void UpdateAmmo(float currentAmmo)

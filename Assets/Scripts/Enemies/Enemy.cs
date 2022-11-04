@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     public float materialChangeTime_ = 0.1f;
     public float attackCooldown = 1.0f;
     public int particlePoolLenght_;
+    public int scoreGiven_ = 100;
     public EnemyWeapon weapon_;
 
     [Header("Sound")]
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour
         state_ = EnemyState.kIdle;
         player_ = GameObject.Find("PlayerCapsule").transform;
         healthComponent_.onTakeDamage_ += () => OnTakeDamage();
-        healthComponent_.onDeath_ += () => PlayDeathSound();
+        healthComponent_.onDeath_ += () => OnDeath();
         material_ = GetComponentInChildren<MeshRenderer>().material;
         materialDefaultColor_ = material_.color;
 
@@ -109,6 +110,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnDeath()
+    {
+        ScoreManager.Instance.AddScore(scoreGiven_);
+        PlayDeathSound();
+    }
 
     private void Shoot()
     {

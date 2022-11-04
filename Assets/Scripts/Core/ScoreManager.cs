@@ -8,7 +8,7 @@ public class ScoreManager : MonoBehaviour
 
     public enum ScoreLevel
     {
-        kF,
+        kF = 1,
         kD,
         kC,
         kB,
@@ -23,22 +23,24 @@ public class ScoreManager : MonoBehaviour
     private ScoreLevel scoreLevel_;
     private int totalScore_;
 
-    void Start()
+    static private ScoreManager instance_;
+    static public ScoreManager Instance
     {
-        scoreLevel_ = ScoreLevel.kF;
-        UIManager.Instance.ChangeComboText(scoreLevel_);
+        get { return instance_; }
     }
 
-    void Update()
+    void Start()
+    {
+        if (instance_ == null) instance_ = this;
+        scoreLevel_ = ScoreLevel.kF;
+    }
+
+    void LateUpdate()
     {
         UIManager.Instance.AddComboValue(-(comboLoseRate_ * Time.deltaTime));
         if(UIManager.Instance.GetComboValue() <= 0.0f)
         {
             DowngradeCombo();
-        }
-        else if(UIManager.Instance.GetComboValue() >= 1.0f)
-        {
-            UpgradeCombo();
         }
     }
 
@@ -46,7 +48,15 @@ public class ScoreManager : MonoBehaviour
     {
         totalScore_ += score;
 
-        UIManager.Instance.AddComboValue(score / (10000.0f * (float)scoreLevel_));
+        float scoreToAdd = score / (10000.0f * (float)scoreLevel_);
+
+        if (UIManager.Instance.GetComboValue() + scoreToAdd >= 1.0f)
+        {
+            UpgradeCombo();
+            scoreToAdd -= UIManager.Instance.GetComboValue();
+            return;
+        }
+        UIManager.Instance.AddComboValue(scoreToAdd);
     }
 
     private void UpgradeCombo()
@@ -61,7 +71,7 @@ public class ScoreManager : MonoBehaviour
 
     private void DowngradeCombo()
     {
-        if (scoreLevel_ != ScoreLevel.kD)
+        if (scoreLevel_ != ScoreLevel.kF)
         {
             scoreLevel_--;
             UIManager.Instance.SetComboValue(0.99f);

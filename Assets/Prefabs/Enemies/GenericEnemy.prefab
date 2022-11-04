@@ -58,13 +58,14 @@ MonoBehaviour:
   materialChangeTime_: 0.1
   attackCooldown: 1
   particlePoolLenght_: 10
+  scoreGiven_: 500
   weapon_: {fileID: 5501185257333230401}
   damageSounds_:
   - {fileID: 8300000, guid: f41aabe53b8b5574abc084cbd7bcf035, type: 3}
   - {fileID: 8300000, guid: bce74916e8cd6454ca7967c648abcc16, type: 3}
   - {fileID: 8300000, guid: b092b756fae5e334485b50fdd16559a1, type: 3}
   deathSound_: {fileID: 8300000, guid: 203cf6543705adb47954b17d625a5dcd, type: 3}
-  detectionRange_: 100
+  detectionRange_: 50
   directionChangeChance_: 60
 --- !u!114 &1194276926878128984
 MonoBehaviour:
