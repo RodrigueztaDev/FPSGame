@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     public Image normalCrosshair_;
     public Image shotgunCrosshair_;
 
+    public Text comboText_;
+    public Slider comboProgressBar_;
+
     public FirstPersonController player_;
     static private UIManager instance_;
     static public UIManager Instance
@@ -59,5 +62,72 @@ public class UIManager : MonoBehaviour
     public void UpdateHealth()
     {
         healthAmount_.text = player_.healthComponent_.Health.ToString();
+    }
+
+    public void SetComboValue(float value)
+    {
+        comboProgressBar_.value = value;
+    }
+
+    public void AddComboValue(float value)
+    {
+        comboProgressBar_.value += value;
+    }
+
+    public float GetComboValue()
+    {
+        return comboProgressBar_.value;
+    }
+
+    public void ChangeComboText(ScoreManager.ScoreLevel scoreLevel)
+    {
+        switch (scoreLevel)
+        {
+            case ScoreManager.ScoreLevel.kF:
+                {
+                    comboText_.text = "F";
+                    break;
+                }
+            case ScoreManager.ScoreLevel.kD:
+                {
+                    comboText_.text = "D";
+                    break;
+                }
+            case ScoreManager.ScoreLevel.kC:
+                {
+                    comboText_.text = "C";
+                    break;
+                }
+            case ScoreManager.ScoreLevel.kB:
+                {
+                    comboText_.text = "B";
+                    break;
+
+                }
+            case ScoreManager.ScoreLevel.kA:
+                {
+                    comboText_.text = "A";
+                    break;
+
+                }
+            case ScoreManager.ScoreLevel.kS:
+                {
+                    comboText_.text = "S";
+                    break;
+
+                }
+            case ScoreManager.ScoreLevel.kSS:
+                {
+                    comboText_.text = "SS";
+                    break;
+
+                }
+            case ScoreManager.ScoreLevel.kSSS:
+                {
+                    comboText_.text = "SSS";
+                    break;
+
+                }
+        }
     }
 }
