@@ -48,13 +48,12 @@ public class ScoreManager : MonoBehaviour
     {
         totalScore_ += score * (int)scoreLevel_;
 
-        float scoreToAdd = score / (10000.0f * (float)scoreLevel_);
+        float scoreToAdd = score / (100.0f * (float)scoreLevel_);
 
         if (UIManager.Instance.GetComboValue() + scoreToAdd >= 1.0f)
         {
             UpgradeCombo();
             scoreToAdd -= UIManager.Instance.GetComboValue();
-            return;
         }
         UIManager.Instance.AddComboValue(scoreToAdd);
     }

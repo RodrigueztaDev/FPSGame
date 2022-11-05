@@ -1402,6 +1402,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4093091022394016867, guid: e7a67ed8c3b034e4aa30a5a7564d95d6,
         type: 3}
+      propertyPath: spawnDelay_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4093091022394016867, guid: e7a67ed8c3b034e4aa30a5a7564d95d6,
+        type: 3}
       propertyPath: spawnStartDelay_
       value: 5
       objectReference: {fileID: 0}

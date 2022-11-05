@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a901f4c738e754692dd5699530ff4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboLoseRate_: 0.1
+  comboLoseRate_: 0.05
 --- !u!114 &4093091022394016867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,3 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d6ee30133a2194da93cdde57858c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyWaves_: []
+  spawnPoints_: []
+  spawnDelay_: 0
