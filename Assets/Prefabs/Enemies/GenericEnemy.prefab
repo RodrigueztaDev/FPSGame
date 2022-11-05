@@ -65,7 +65,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bce74916e8cd6454ca7967c648abcc16, type: 3}
   - {fileID: 8300000, guid: b092b756fae5e334485b50fdd16559a1, type: 3}
   deathSound_: {fileID: 8300000, guid: 203cf6543705adb47954b17d625a5dcd, type: 3}
-  detectionRange_: 50
+  detectionRange_: 200
   directionChangeChance_: 60
 --- !u!114 &1194276926878128984
 MonoBehaviour:

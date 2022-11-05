@@ -14,6 +14,8 @@ public class HealthComponent : MonoBehaviour
         get { return health_; }
     }
 
+    private bool dead_;
+
     public delegate void OnHealthChangeDelegate();
     public event OnHealthChangeDelegate onTakeDamage_;
     public event OnHealthChangeDelegate onHeal_;
@@ -21,6 +23,7 @@ public class HealthComponent : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (dead_) return;
         health_ -= damage;
         if (health_ <= 0.0f)
         {
@@ -35,10 +38,12 @@ public class HealthComponent : MonoBehaviour
     private void Awake()
     {
         health_ = maxHealth_;
+        dead_ = false;
     }
 
     public void Heal(float health)
     {
+        if (dead_) return;
         health_ += health;
         if (health_ > maxHealth_)
         {
@@ -49,6 +54,7 @@ public class HealthComponent : MonoBehaviour
 
     public void Die()
     {
+        dead_ = true;
         if (onDeath_ != null) onDeath_();
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         foreach(Renderer r in renderers)

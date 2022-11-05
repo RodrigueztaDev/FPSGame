@@ -46,7 +46,7 @@ public class ScoreManager : MonoBehaviour
 
     public void AddScore(int score)
     {
-        totalScore_ += score;
+        totalScore_ += score * (int)scoreLevel_;
 
         float scoreToAdd = score / (10000.0f * (float)scoreLevel_);
 

@@ -79,7 +79,8 @@ public class Enemy : MonoBehaviour
                     if(distanceToPlayer_ <= detectionRange_)
                     {
                         target_ = player_.position + (Random.insideUnitSphere * (detectionRange_ * 0.5f));
-                        state_ = EnemyState.kMoving;
+                        state_ = EnemyState.kShootingAndMoving;
+                        InvokeRepeating("Shoot", attackCooldown, attackCooldown);
                         agent_.SetDestination(target_);
                     }
                     break;
@@ -113,6 +114,7 @@ public class Enemy : MonoBehaviour
     private void OnDeath()
     {
         ScoreManager.Instance.AddScore(scoreGiven_);
+        CancelInvoke();
         PlayDeathSound();
     }
 
